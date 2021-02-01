@@ -23,11 +23,11 @@ namespace ConsoleUI
             Console.WriteLine(carManager.GetById(2).Description);
 
 
-            Car carToAdd = new Car{Id=6,BrandId=6,ColorId=6,DailyPrice=800,ModelYear=2017,Description="Herhangi bir kusur bulunmamaktadır. Eklendi"};
-            Car carToUpdate = new Car{Id=4,BrandId=2,ColorId=3,ModelYear=2002,DailyPrice=120,Description="Krom kısımlar paslı.Güncellendi"};
-            Car carToDelete = new Car{Id=5,BrandId=3,ColorId=2,ModelYear=2010,DailyPrice=450,Description="Sağ ön kapıda ufak bir darbe mevcut."};
+            Car carToAdd = new Car { Id = 6, BrandId = 6, ColorId = 6, DailyPrice = 800, ModelYear = 2017, Description = "Herhangi bir kusur bulunmamaktadır. Eklendi" };
+            Car carToUpdate = new Car { Id = 4, BrandId = 2, ColorId = 3, ModelYear = 2002, DailyPrice = 120, Description = "Krom kısımlar paslı.Güncellendi" };
+            Car carToDelete = new Car { Id = 5, BrandId = 3, ColorId = 2, ModelYear = 2010, DailyPrice = 450, Description = "Sağ ön kapıda ufak bir darbe mevcut." };
 
-            
+
             Console.WriteLine("Add / Update / Delete öncesi....\n");
             foreach (var car in carManager.GetAll())
             {
@@ -36,14 +36,14 @@ namespace ConsoleUI
 
             //Add(),Update(),Delete();
 
-            //carManager.Add(carToAdd);
+            carManager.Add(carToAdd);
             //carManager.Update(carToUpdate);
-            carManager.Delete(carToDelete);
+            //carManager.Delete(carToDelete);
 
             Console.WriteLine("\nAdd / Update / Delete sonrası....\n");
-            foreach (var cars in carManager.GetAll())
+            foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine(cars.Description);
+                Console.WriteLine(car.Description);
             }
 
         }
