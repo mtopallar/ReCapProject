@@ -16,11 +16,14 @@ namespace ConsoleUI
 
             Car car1 = new Car
             {
-                BrandId = 2, ColorId = 2, DailyPrice = 0, ModelYear = 2007,
+                BrandId = 2,
+                ColorId = 2,
+                DailyPrice = 225,
+                ModelYear = 2010,
                 Description = "Dizel, 2010 model, krom kısımlar paslı"
             };
-            Brand brand1 = new Brand {Name="Volkswagen",Id=2};
-            Color color1 = new Color {Name="Siyah",Id=2};
+            Brand brand1 = new Brand { Name = "Volkswagen", Id = 2 };
+            Color color1 = new Color { Name = "Siyah" };
 
             //colorManager.Add(color1);
             //brandManager.Add(brand1);
@@ -28,11 +31,11 @@ namespace ConsoleUI
             //brandManager.Update(brand1);
             //colorManager.Delete(color1);
 
-            //foreach (var car in carManager.GetAll())
+            //foreach (var car in carManager.GetCarsByColorId(2))
             //{
             //    Console.WriteLine("{0} --- {1} --- {2}--- {3}--- {4} ", car.BrandId, car.ColorId, car.DailyPrice, car.ModelYear, car.Description);
             //}
-
+            //Console.WriteLine(carManager.GetById(2).Description);
             //foreach (var brand in brandManager.GetAll())
             //{
             //    Console.WriteLine("{0} --- {1}", brand.Id, brand.Name);
@@ -68,17 +71,29 @@ namespace ConsoleUI
 
             Car carToAdd = new Car
             {
-                Id = 6, BrandId = 6, ColorId = 6, DailyPrice = 800, ModelYear = 2017,
+                Id = 6,
+                BrandId = 6,
+                ColorId = 6,
+                DailyPrice = 800,
+                ModelYear = 2017,
                 Description = "Herhangi bir kusur bulunmamaktadır. Eklendi"
             };
             Car carToUpdate = new Car
             {
-                Id = 4, BrandId = 2, ColorId = 3, ModelYear = 2002, DailyPrice = 120,
+                Id = 4,
+                BrandId = 2,
+                ColorId = 3,
+                ModelYear = 2002,
+                DailyPrice = 120,
                 Description = "Krom kısımlar paslı.Güncellendi"
             };
             Car carToDelete = new Car
             {
-                Id = 5, BrandId = 3, ColorId = 2, ModelYear = 2010, DailyPrice = 450,
+                Id = 5,
+                BrandId = 3,
+                ColorId = 2,
+                ModelYear = 2010,
+                DailyPrice = 450,
                 Description = "Sağ ön kapıda ufak bir darbe mevcut."
             };
 
