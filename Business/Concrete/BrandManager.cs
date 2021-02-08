@@ -18,14 +18,7 @@ namespace Business.Concrete
 
         public void Add(Brand brand)
         {
-            if (brand.Name.Length>=2)
-            {
-                _brandDal.Add(brand);
-            }
-            else
-            {
-                Console.WriteLine("Araç ismi 2 veya daha fazla karakterden oluşmalıdır.");
-            }
+            _brandDal.Add(brand);
         }
 
         public void Delete(Brand brand)

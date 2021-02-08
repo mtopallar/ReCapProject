@@ -4,6 +4,7 @@ using System.Text;
 using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -18,13 +19,18 @@ namespace Business.Concrete
 
         public void Add(Car car)
         {
-            if (car.DailyPrice>0)
+            if (car.DailyPrice<=0)
             {
-                _carDal.Add(car);
+                Console.WriteLine("Aracın günlük ücreti 0 TL olamaz. Lütfen kontrol ediniz.");
+                
+            }
+            else if(car.CarName.Length<2)
+            {
+                Console.WriteLine("Araç ismi minimum 2 karakter olmalıdır.. Lütfen kontrol ediniz.");
             }
             else
             {
-                Console.WriteLine("Aracın günlük ücreti 0 TL olamaz. Lütfen kontrol ediniz.");
+                _carDal.Add(car);
             }
         }
 
@@ -41,6 +47,11 @@ namespace Business.Concrete
         public Car GetById(int id)
         {
             return _carDal.Get(c => c.Id == id);
+        }
+
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
         }
 
         public List<Car> GetCarsByBrandId(int brandId)

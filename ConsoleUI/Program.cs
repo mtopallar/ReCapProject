@@ -17,36 +17,53 @@ namespace ConsoleUI
             Car car1 = new Car
             {
                 BrandId = 2,
-                ColorId = 2,
-                DailyPrice = 225,
-                ModelYear = 2010,
-                Description = "Dizel, 2010 model, krom kısımlar paslı"
+                ColorId = 1003,
+                CarName = "Polo",
+                DailyPrice = 450,
+                ModelYear = 2017,
+                Description = "Dizel, fiziksel kusur yok."
             };
-            Brand brand1 = new Brand { Name = "Volkswagen", Id = 2 };
-            Color color1 = new Color { Name = "Siyah" };
+            Brand brand1 = new Brand { Name = "Audi" };
+            Color color1 = new Color { Name = "Mavi" };
 
-            //colorManager.Add(color1);
             //brandManager.Add(brand1);
-            //carManager.Add(car1);
             //brandManager.Update(brand1);
-            //colorManager.Delete(color1);
+            //brandManager.Delete(brand1);
 
-            //foreach (var car in carManager.GetCarsByColorId(2))
-            //{
-            //    Console.WriteLine("{0} --- {1} --- {2}--- {3}--- {4} ", car.BrandId, car.ColorId, car.DailyPrice, car.ModelYear, car.Description);
-            //}
-            //Console.WriteLine(carManager.GetById(2).Description);
             //foreach (var brand in brandManager.GetAll())
             //{
-            //    Console.WriteLine("{0} --- {1}", brand.Id, brand.Name);
+            //    Console.WriteLine("{0} --- {1}",brand.Id,brand.Name);
             //}
+
+            //Console.WriteLine(brandManager.GetById(1003).Name);
+
+            //colorManager.Add(color1);
+            //colorManager.Update(color1);
+            //colorManager.Delete(color1);
 
             //foreach (var color in colorManager.GetAll())
             //{
             //    Console.WriteLine("{0} --- {1}", color.Id, color.Name);
             //}
 
+            //Console.WriteLine(colorManager.GetById(1003).Name);
 
+            //carManager.Add(car1);
+            //carManager.Update(car1);
+            //carManager.Delete(car1);
+
+            //foreach (var car in carManager.GetCarsByColorId(2))
+            //{
+            //    Console.WriteLine("{0} --- {1} --- {2}--- {3}--- {4} --- {5} ", car.BrandId, car.ColorId, car.CarName, car.DailyPrice, car.ModelYear, car.Description);
+            //}
+
+            //Console.WriteLine(carManager.GetById(4).CarName);
+
+            foreach (var carDetail in carManager.GetCarDetails())
+            {
+                Console.WriteLine("Araç adı: {0} --- Marka adı: {1} --- Renk: {2} --- Günlük kiralama ücreti: {3}",carDetail.CarName,carDetail.BrandName,carDetail.ColorName,carDetail.DailyPrice);
+            }
+            
 
 
 
