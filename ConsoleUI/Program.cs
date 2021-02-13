@@ -14,6 +14,37 @@ namespace ConsoleUI
             ColorManager colorManager = new ColorManager(new EfColorDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
 
+            UserManager userManager = new UserManager(new EfUserDal());
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+
+            User user = new User
+            {
+                FirstName="Engin",
+                LastName="Demiroğ",
+                Email="engin@mail.com",
+                Password="12345"
+            };
+
+            Customer customer = new Customer
+            {
+                UserId=2,
+                CompanyName="Kodlama.io"
+            };
+
+            Rental rental = new Rental
+            {
+                //Id=4,
+                CarId=1,
+                CustomerId=1,
+                RentDate=DateTime.Now,
+                ReturnDate=new DateTime(2021,02,26)
+            };
+
+            //var result = rentalManager.Update(rental);
+            //Console.WriteLine(result.Message);
+            
+
             Car car2 = new Car();
             car2.BrandId = 2003;
             car2.ColorId = 1;
@@ -67,24 +98,24 @@ namespace ConsoleUI
             //}
 
             //Console.WriteLine(carManager.GetById(4).CarName);
-            var result = carManager.Add(car2);
+            //var result = carManager.Add(car2);
 
-            if (result.Success)
-            {
-                Console.WriteLine(result.Message);
+            //if (result.Success)
+            //{
+            //    Console.WriteLine(result.Message);
 
-                foreach (var carDetail in carManager.GetCarDetails().Data)
-                {
+            //    foreach (var carDetail in carManager.GetCarDetails().Data)
+            //    {
 
-                    Console.WriteLine("Araç adı: {0} --- Marka adı: {1} --- Renk: {2} --- Günlük kiralama ücreti: {3}", carDetail.CarName, carDetail.BrandName, carDetail.ColorName, carDetail.DailyPrice);
-                }
+            //        Console.WriteLine("Araç adı: {0} --- Marka adı: {1} --- Renk: {2} --- Günlük kiralama ücreti: {3}", carDetail.CarName, carDetail.BrandName, carDetail.ColorName, carDetail.DailyPrice);
+            //    }
 
-            }
-            else
-            {
-                Console.WriteLine(result.Message);
+            //}
+            //else
+            //{
+            //    Console.WriteLine(result.Message);
 
-            }
+            //}
 
 
 

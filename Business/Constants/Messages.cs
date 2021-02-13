@@ -24,12 +24,34 @@ namespace Business.Constants
         public static string GetCarsByBrandIdSuccessfully = "Markaya göre araç listesi başarıyla getirildi.";
         public static string GetCarsByColorIdSuccessfully = "Renge göre araç listesi başarıyla getirildi.";
         public static string CarUpdatedSuccessfully = "Araç başarıyla güncellendi.";
-       
+
         //Color
-        public static string ColorAddedSuccessfully="Renk başarıyla eklendi";
-        public static string ColorDeletedSuccessfully="Renk başarıyla silindi";
-        public static string GetAllColorsSuccessfully="Tüm renkler başarıyla listelendi";
-        public static string GetColorByIdSuccessfully="Renk detayları başarıyla getirildi.";
-        public static string ColorUpdatedSuccessfully="Renk başarıyla güncellendi.";
+        public static string ColorAddedSuccessfully = "Renk başarıyla eklendi";
+        public static string ColorDeletedSuccessfully = "Renk başarıyla silindi";
+        public static string GetAllColorsSuccessfully = "Tüm renkler başarıyla listelendi";
+        public static string GetColorByIdSuccessfully = "Renk detayları başarıyla getirildi.";
+
+        //User
+        public static string ColorUpdatedSuccessfully = "Renk başarıyla güncellendi.";
+        public static string UserAddedSuccessfully = "Kullanıcı başarıyla eklendi.";
+        public static string UserDeletedSuccessfully = "Kullanıcı başarıyla silindi";
+        public static string AllUsersListedSuccessfully = "Tüm kullanıcılar başarıyla listeledi";
+        public static string GetUserByIdSuccessfully = "Kullanıcı detayları başarıyla getirildi.";
+
+        //Customer
+        public static string UserUpdatedSuccessfully = "Kullanıcı başarıyla güncellendi.";
+        public static string CustomerAddedSuccessfully = "Müşteri başarıyla eklendi.";
+        public static string CustomerDeletedSuccessfully = "Müşteri başarıyla silindi.";
+        public static string GetAllCustomersSuccessfully = "Tüm müşteriler başarıyla listelendi.";
+        public static string GetCustomerByIdSuccessfully = "Müşteri detayları başarıyla getirildi.";
+        public static string CustomerUpdatedSuccessfully = "Müşteri başarıyla güncellendi.";
+
+        //Rental
+        public static string InvalidReturnDate = "Geçersiz geri dönüş tarihi.";
+        public static string RantalAddedSuccessfully = "Araç başarıyla kiralandı";
+        public static string RentalDeletedSuccessfully = "Kira işlemi başarıyla silindi.";
+        public static string GetAllRentalsSuccessfully = "Tüm kiralama işlemleri başarıyla listelendi.";
+        public static string GetRentalByIdSuccessfully = "Kira detayları başarıyla getirildi.";
+        public static string RentalUpdatedSuccessfully = "Kira işlemi başarıyla güncellendi.";
     }
 }
