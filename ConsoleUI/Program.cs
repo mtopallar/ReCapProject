@@ -38,12 +38,12 @@ namespace ConsoleUI
                 CarId=1,
                 CustomerId=1,
                 RentDate=DateTime.Now,
-                ReturnDate=new DateTime(2021,02,26)
+                //ReturnDate=new DateTime(2021,02,26)
             };
 
-            //var result = rentalManager.Update(rental);
-            //Console.WriteLine(result.Message);
-            
+            var result = rentalManager.Add(rental);
+            Console.WriteLine(result.Message);
+
 
             Car car2 = new Car();
             car2.BrandId = 2003;
