@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -19,14 +21,13 @@ namespace Business.Concrete
         }
 
         //DateTime'ın default değeri null değil.
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var rentlToCheck = GetById(rental.Id);
-
-            if (rental.ReturnDate == DateTime.MinValue)
-            {
-                return new ErrorResult(Messages.InvalidReturnDate);
-            }
+            //if (rental.ReturnDate == DateTime.MinValue)
+            //{
+            //    return new ErrorResult(Messages.InvalidReturnDate);
+            //}
 
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RantalAddedSuccessfully);
