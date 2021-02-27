@@ -53,5 +53,11 @@ namespace Business.Constants
         public static string GetAllRentalsSuccessfully = "Tüm kiralama işlemleri başarıyla listelendi.";
         public static string GetRentalByIdSuccessfully = "Kira detayları başarıyla getirildi.";
         public static string RentalUpdatedSuccessfully = "Kira işlemi başarıyla güncellendi.";
+        
+        //CarImage
+        public static string ImageAddedSuccessfully="Resim başarıyla eklendi.";
+        public static string ImageDeletedSuccessfully="Resim başarıyla silindi.";
+        public static string ImageUpdatedSuccessfully="Resim başarıyla güncellendi.";
+        public static string MaksimumImageLimitReached="Bir araç için izin verilen en fazla resim sayısına ulaştınız.";
     }
 }

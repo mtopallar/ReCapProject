@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
@@ -104,11 +105,12 @@ namespace ConsoleUI
             //{
             //    Console.WriteLine(result.Message);
 
-            //    foreach (var carDetail in carManager.GetCarDetails().Data)
-            //    {
-
-            //        Console.WriteLine("Araç adı: {0} --- Marka adı: {1} --- Renk: {2} --- Günlük kiralama ücreti: {3}", carDetail.CarName, carDetail.BrandName, carDetail.ColorName, carDetail.DailyPrice);
-            //    }
+            //foreach (var carDetail in carManager.GetCarDetails().Data)
+            //{
+            //    var carlresimlist = carDetail.CarImages;
+                
+            //    Console.WriteLine("Araç adı: {0} --- Marka adı: {1} --- Renk: {2} --- Günlük kiralama ücreti: {3}", carDetail.CarName, carDetail.BrandName, carDetail.ColorName, carDetail.DailyPrice);
+            //}
 
             //}
             //else
