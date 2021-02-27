@@ -38,24 +38,14 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ImageDeletedSuccessfully);
         }
 
-        public IDataResult<List<CarImage>> GetAll()
+        public IDataResult<CarImage> GetById(int id)
         {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
+            return new SuccessDataResult<CarImage>(_carImageDal.Get(i=>i.Id==id));
         }
 
         public IDataResult<List<CarImage>> GetListByCarId(int carId)
         {
             return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(i => i.CarId == carId));
-
-            //string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName + @"\CarImages\default.jpg");
-
-            //var result = _carImageDal.GetAll(c => c.CarId == carId).Any();
-
-            //if (!result)
-            //{
-            //    return new SuccessDataResult<List<CarImage>>(new List<CarImage>{new CarImage {CarId = carId, ImagePath = path, AddedDate = DateTime.Now }});
-            //}
-            //return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll(i => i.CarId == carId));
         }
 
         public IResult Update(CarImage carImage)
@@ -79,82 +69,5 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-        ////////////////////////////////////////////////////////////////////
-
-        //private List<CarImage> CheckIfCarImageNull(int id)
-        //{
-        //    string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName + @"\CarImages\default.jpg");
-        //    var result = _carImageDal.GetAll(c => c.CarId == id).Any();
-
-
-
-
-        //    if (!result)
-        //    {
-        //        return new List<CarImage> { new CarImage { CarId = id, ImagePath = path, AddedDate = DateTime.Now } };
-        //    }
-        //    return _carImageDal.GetAll(p => p.CarId == id);
-        //}
-
-        private IDataResult<CarImage> CreatedFile(CarImage carImage, string extension)
-        {
-
-            string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName + @"\CarImages");
-
-            var creatingUniqueFilename = Guid.NewGuid().ToString("D")
-                + "_" + DateTime.Now.Month + "_"
-                + DateTime.Now.Day + "_"
-                + DateTime.Now.Year + extension;
-
-            string source = Path.Combine(carImage.ImagePath);
-
-            string result = $@"{path}\{creatingUniqueFilename}";
-
-            try
-            {
-
-                File.Move(source, path + @"\" + creatingUniqueFilename);
-            }
-            catch (Exception exception)
-            {
-
-                return new ErrorDataResult<CarImage>(exception.Message);
-            }
-
-            return new SuccessDataResult<CarImage>(new CarImage
-            {
-                Id = carImage.Id, CarId = carImage.CarId, ImagePath = result, Date = DateTime.Now
-            }); // Messages.ImagesAdded);
-        }
-
-        private IDataResult<CarImage> UpdatedFile(CarImage carImage)
-        {
-            var creatingUniqueFilename = Guid.NewGuid().ToString("N") + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + ".jpeg";
-
-            string path = Path.Combine(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).FullName + @"\Images");
-
-            string result = $"{path}\\{creatingUniqueFilename}";
-
-            File.Copy(carImage.ImagePath, path + "\\" + creatingUniqueFilename);
-
-            File.Delete(carImage.ImagePath);
-
-            return new SuccessDataResult<CarImage>(new CarImage { Id = carImage.Id, CarId = carImage.CarId, ImagePath = result, Date = DateTime.Now });
-        }
-
-        private IResult CarImageDelete(CarImage carImage)
-        {
-            try
-            {
-                File.Delete(carImage.ImagePath);
-            }
-            catch (Exception exception)
-            {
-
-                return new ErrorResult(exception.Message);
-            }
-
-            return new SuccessResult();
-        }
     }
 }

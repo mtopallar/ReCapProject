@@ -26,13 +26,13 @@ namespace WebAPI.Controllers
             _carImageService = carImageService;
         }
 
-       
+
         [HttpPost("add")]
         //Postman'da post ederken Key olarak UploadedImage Value olarak resimler eklenecek. Çoklu eklemeye izin var. bir de carId değeri vermelisin.
         public string Add([FromForm] ImageForUpload imageForUploads, [FromForm] int carId)
         {
             var imagesPerCar = _carImageService.GetListByCarId(carId);
-
+            // max resim sayısına ulaştıysa klasöre de kopyalamasın yapılacak. db ye yazmıyor ama klasöre fazla resimleri alıyor.
             try
             {
                 if (imageForUploads.UploadedImage != null)
@@ -99,7 +99,57 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("update")]
+        public string Update([FromBody] CarImage carImage)
+        {
+            var imagesPerCar = _carImageService.GetListByCarId(carImage.CarId);
+            var imageToUpdated = _carImageService.GetById(carImage.Id);
 
+            if (imageToUpdated.Data == null)
+            {
+                return "Resim sistemde kayıtlı değil.";
+            }
+
+            imageToUpdated.Data.CarId = carImage.CarId;
+            imageToUpdated.Data.Date = carImage.Date;
+            if (imagesPerCar.Data.Count == 5)
+            {
+                return _carImageService.Update(imageToUpdated.Data).Message;
+                //return "Bu araç için maksimum sayıda resim sistemde yüklü.";
+            }
+            var result = _carImageService.Update(imageToUpdated.Data);
+            return result.Message;
+        }
+
+        [HttpPost("delete")]
+        public string Delete([FromBody] CarImage carImage)
+        {
+            var imageForDelete = _carImageService.GetById(carImage.Id);
+            if (imageForDelete.Data == null)
+            {
+                return "Resim bulunamadı.";
+            }
+            string deletedImagePath = imageForDelete.Data.ImagePath;
+            var tryDeleteImageFromDb = _carImageService.Delete(carImage);
+            if (tryDeleteImageFromDb.Success)
+            {
+                System.IO.File.Delete(deletedImagePath);
+            }
+
+            return tryDeleteImageFromDb.Message;
+        }
+        [HttpGet("getlistbycarid")]
+
+        public void GetListByCarId(int carId)
+        {
+           _carImageService.GetListByCarId(carId);
+           
+        }
+
+        [HttpGet("getimagebyid")]
+        public void GetImage(int id)
+        {
+            _carImageService.GetById(id);
+        }
     }
 }
 
