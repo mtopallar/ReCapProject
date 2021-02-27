@@ -32,7 +32,10 @@ namespace WebAPI.Controllers
         public string Add([FromForm] ImageForUpload imageForUploads, [FromForm] int carId)
         {
             var imagesPerCar = _carImageService.GetListByCarId(carId);
+            #region ToDos
             // max resim sayısına ulaştıysa klasöre de kopyalamasın yapılacak. db ye yazmıyor ama klasöre fazla resimleri alıyor.
+            // araç var ama resim yoksa default resmi kaydetsin. 
+            #endregion
             try
             {
                 if (imageForUploads.UploadedImage != null)
@@ -139,16 +142,27 @@ namespace WebAPI.Controllers
         }
         [HttpGet("getlistbycarid")]
 
-        public void GetListByCarId(int carId)
+        public IDataResult<List<CarImage>> GetListByCarId(int carId)
         {
-           _carImageService.GetListByCarId(carId);
-           
+            var result = _carImageService.GetListByCarId(carId);
+            if (result.Data.Count==0)
+            {
+                return new ErrorDataResult<List<CarImage>>("Araca ait resim bulunmamaktadır.");
+            }
+
+            return result;
         }
 
         [HttpGet("getimagebyid")]
-        public void GetImage(int id)
+        public IDataResult<CarImage> GetImage(int id)
         {
-            _carImageService.GetById(id);
+            var result = _carImageService.GetById(id);
+            if (result.Data==null)
+            {
+                return new ErrorDataResult<CarImage>("Resim bulunamadı");
+            }
+
+            return result;
         }
     }
 }
