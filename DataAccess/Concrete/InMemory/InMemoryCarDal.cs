@@ -9,7 +9,7 @@ using Entities.DTOs;
 
 namespace DataAccess.Concrete.InMemory
 {
-    public class InMemoryCarDal : ICarDal
+    public class InMemoryCarDal // : ICarDal
     {
         private List<Car> _cars;
 
@@ -60,6 +60,11 @@ namespace DataAccess.Concrete.InMemory
         }
 
         public List<CarDetailDto> GetCarDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailsByCarIdDto> GetCarDetailsByCarId(int carId)
         {
             throw new NotImplementedException();
         }

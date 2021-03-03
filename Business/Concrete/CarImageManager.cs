@@ -37,7 +37,7 @@ namespace Business.Concrete
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.ImageDeletedSuccessfully);
         }
-
+        
         public IDataResult<CarImage> GetById(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(i=>i.Id==id));

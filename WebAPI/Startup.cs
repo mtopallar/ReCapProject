@@ -15,6 +15,7 @@ using Business.Abstract;
 using Business.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using WebAPI.Helpers;
 
 namespace WebAPI
 {
@@ -30,6 +31,7 @@ namespace WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ICarPhotoFileHelper, CarPhotoFileHelper>();
 
             services.AddControllers();
 

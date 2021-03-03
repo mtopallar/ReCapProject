@@ -19,6 +19,39 @@ namespace ConsoleUI
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
+            CarImage carImageornek = new CarImage
+            {
+                ImagePath="default resim",
+            };
+
+            EfCarDal carDal = new EfCarDal();
+
+            var result = carDal.GetCarDetailsByCarIdWithDefaultImage(2, carImageornek);
+
+            //Console.WriteLine(result.BrandName);
+            //Console.WriteLine(result.ColorName);
+            //Console.WriteLine(result.Description);
+            //Console.WriteLine(result.DefaultImage.ImagePath);
+
+            var result2 = carDal.GetCarDetailsByCarId(1);
+
+            foreach (var carDetailsByCarIdDto in result2)
+            {
+                Console.WriteLine(carDetailsByCarIdDto.CarName);
+                Console.WriteLine(carDetailsByCarIdDto.BrandName);
+                Console.WriteLine(carDetailsByCarIdDto.ColorName);
+                
+                foreach (var carImage in carDetailsByCarIdDto.CarImages)
+                {
+                    Console.WriteLine(carImage.ImagePath);
+                    Console.WriteLine(carImage.CarId);
+                    Console.WriteLine(carImage.Date);
+                    Console.WriteLine(carImage.Id);
+                }
+            }
+            
+
+
             User user = new User
             {
                 FirstName="Engin",
@@ -42,8 +75,8 @@ namespace ConsoleUI
                 //ReturnDate=new DateTime(2021,02,26)
             };
 
-            var result = rentalManager.Add(rental);
-            Console.WriteLine(result.Message);
+            //var result = rentalManager.Add(rental);
+            //Console.WriteLine(result.Message);
 
 
             Car car2 = new Car();

@@ -9,6 +9,7 @@ using Business.Abstract;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Hosting;
+using WebAPI.Helpers;
 using WebApiFieUpload.Models;
 
 namespace WebAPI.Controllers
@@ -19,11 +20,15 @@ namespace WebAPI.Controllers
     {
         private static IWebHostEnvironment _webHostEnvironment;
         private ICarImageService _carImageService;
+        private ICarPhotoFileHelper _carPhotoFileHelper;
+        private ICarService _carService;
 
-        public CarImagesController(IWebHostEnvironment webHostEnvironment, ICarImageService carImageService)
+        public CarImagesController(IWebHostEnvironment webHostEnvironment, ICarImageService carImageService, ICarPhotoFileHelper carPhotoFileHelper, ICarService carService)
         {
             _webHostEnvironment = webHostEnvironment;
             _carImageService = carImageService;
+            _carPhotoFileHelper = carPhotoFileHelper;
+            _carService = carService;
         }
 
 
@@ -31,74 +36,17 @@ namespace WebAPI.Controllers
         //Postman'da post ederken Key olarak UploadedImage Value olarak resimler eklenecek. Çoklu eklemeye izin var. bir de carId değeri vermelisin.
         public string Add([FromForm] ImageForUpload imageForUploads, [FromForm] int carId)
         {
-            var imagesPerCar = _carImageService.GetListByCarId(carId);
-            #region ToDos
-            // max resim sayısına ulaştıysa klasöre de kopyalamasın yapılacak. db ye yazmıyor ama klasöre fazla resimleri alıyor.
-            // araç var ama resim yoksa default resmi kaydetsin. 
-            #endregion
-            try
+            if (carId==0)
             {
-                if (imageForUploads.UploadedImage != null)
-                {
-                    if (imageForUploads.UploadedImage.Count > 0)
-                    {
-                        foreach (var imageForUpload in imageForUploads.UploadedImage)
-                        {
-
-                            if (imagesPerCar.Data.Count >= 5)
-                            {
-                                var result = _carImageService.Add(new CarImage { CarId = carId });
-                                return result.Message;
-                            }
-
-                            string imagePath = _webHostEnvironment.WebRootPath + @"\CarImages\";
-                            if (!Directory.Exists(imagePath))
-                            {
-                                Directory.CreateDirectory(imagePath);
-                            }
-
-                            var guIdName = Guid.NewGuid().ToString("N") + "_" + DateTime.Now.Second;
-                            var fileExtension = new System.IO.FileInfo(imageForUpload.FileName).Extension;
-
-
-                            if (imageForUpload.FileName == "CarRentalDefault" + fileExtension)
-                            {
-                                using (FileStream fileStream = System.IO.File.Create(imagePath + "CarRentalDefault" + fileExtension))
-                                {
-                                    imageForUpload.CopyTo(fileStream);
-                                    fileStream.Flush();
-                                    var carImageForDb = new CarImage { CarId = carId, ImagePath = imagePath + "CarRentalDefault" + fileExtension, Date = DateTime.Now };
-                                    _carImageService.Add(carImageForDb);
-                                }
-                            }
-
-                            else
-                            {
-                                using (FileStream fileStream = System.IO.File.Create(imagePath + guIdName + fileExtension))
-                                {
-                                    imageForUpload.CopyTo(fileStream);
-                                    fileStream.Flush();
-                                    var carImageForDb = new CarImage { CarId = carId, ImagePath = imagePath + guIdName + fileExtension, Date = DateTime.Now };
-                                    _carImageService.Add(carImageForDb);
-                                }
-                            }
-                        }
-
-                    }
-                    return "İzin verilen sayıda resim projeye dahil edildi.";
-                }
-
-                else
-                {
-                    return "Lütfen yüklenecek resmi seçin.";
-                }
-
-            }
-            catch (Exception exception)
-            {
-                return exception.Message;
+                return "Lütfen işlem yapmak istediğiniz aracı seçin.";
             }
 
+            if (imageForUploads.UploadedImage != null)
+            {
+                _carPhotoFileHelper.AddImage(imageForUploads, carId);
+            }
+            return "Lütfen yüklemek istediğiniz fotoğraf(lar)ı seçin.";
+            
         }
 
         [HttpPost("update")]
@@ -120,6 +68,7 @@ namespace WebAPI.Controllers
                 //return "Bu araç için maksimum sayıda resim sistemde yüklü.";
             }
             var result = _carImageService.Update(imageToUpdated.Data);
+            //_carPhotoFileHelper.RemoveDefaultImageWhileAnyImageAdded(carImage.CarId);
             return result.Message;
         }
 
@@ -140,18 +89,31 @@ namespace WebAPI.Controllers
 
             return tryDeleteImageFromDb.Message;
         }
-        [HttpGet("getlistbycarid")]
+        //[HttpGet("getlistbycarid")]
 
-        public IDataResult<List<CarImage>> GetListByCarId(int carId)
-        {
-            var result = _carImageService.GetListByCarId(carId);
-            if (result.Data.Count==0)
-            {
-                return new ErrorDataResult<List<CarImage>>("Araca ait resim bulunmamaktadır.");
-            }
-
-            return result;
-        }
+        //public IDataResult<List<CarImage>> GetListByCarId(int carId)
+        //{
+        //    string imagePath = _webHostEnvironment.WebRootPath + @"\CarImages\";
+        //    var checkIfCarExist = _carService.GetById(carId).Data;
+        //    var imageCountByCar = _carImageService.GetListByCarId(carId);
+        //    if (checkIfCarExist == null)
+        //    {
+        //        return new ErrorDataResult<List<CarImage>>("Araç bulunamadı");
+        //    }
+        //    if (imageCountByCar.Data.Count == 0)
+        //    {
+        //        var defaultCarImage = new CarImage
+        //        {
+        //            CarId = carId,
+        //            ImagePath = imagePath + "CarRentalDefault.jpg",
+        //            Date = DateTime.Now
+        //        };
+        //        List<CarImage> carImageList = new List<CarImage>();
+        //        carImageList.Add(defaultCarImage);
+        //        return new SuccessDataResult<List<CarImage>>(carImageList);
+        //    }
+        //    return imageCountByCar;
+        //}
 
         [HttpGet("getimagebyid")]
         public IDataResult<CarImage> GetImage(int id)

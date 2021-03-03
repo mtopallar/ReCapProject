@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Hosting;
 
 namespace WebAPI.Controllers
 {
@@ -14,10 +15,14 @@ namespace WebAPI.Controllers
     public class CarsController : ControllerBase
     {
         private ICarService _carService;
+        private static IWebHostEnvironment _webHostEnvironment;
+        private ICarImageService _carImageService;
 
-        public CarsController(ICarService carService)
+        public CarsController(ICarService carService,IWebHostEnvironment webHostEnvironment,ICarImageService carImageService)
         {
             _carService = carService;
+            _webHostEnvironment = webHostEnvironment;
+            _carImageService = carImageService;
         }
 
         [HttpGet("getbyid")]
@@ -78,6 +83,34 @@ namespace WebAPI.Controllers
             }
 
             return BadRequest(result);
+        }
+        [HttpGet("getcarimagedetails")]
+        public IActionResult GetCarImageDetails(int carId)
+        {
+            var checkCar = _carService.GetById(carId);
+            if (checkCar.Data == null)
+            {
+                return BadRequest(checkCar);
+            }
+            if (carId==0)
+            {
+                var result = _carService.GetCarDetails();
+                if (result.Success)
+                {
+                    return Ok(result);
+                }
+            }
+            var hasTheCarAnyPhoto = _carImageService.GetListByCarId(carId).Data.Count;
+            if (hasTheCarAnyPhoto==0)
+            {
+                string imagePath = _webHostEnvironment.WebRootPath + @"\CarImages\";
+                var resultWithDefaultPhoto = _carService.GetCarDetailsByCarIdWithDefaultImage(carId,
+                    new CarImage {ImagePath = imagePath + "CarRentalDefault.jpg"});
+                return Ok(resultWithDefaultPhoto);
+            }
+            var resultWithCarOwnPhoto = _carService.GetCarDetailsByCarId(carId);
+                return Ok(resultWithCarOwnPhoto);
+            
         }
 
         [HttpPost("add")]
