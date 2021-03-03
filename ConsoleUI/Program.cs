@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Business.Concrete;
+using Core.Entities.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
@@ -84,7 +85,7 @@ namespace ConsoleUI
                 FirstName = "Engin",
                 LastName = "Demiroğ",
                 Email = "engin@mail.com",
-                Password = "12345"
+                //Password = "12345"
             };
 
             Customer customer = new Customer

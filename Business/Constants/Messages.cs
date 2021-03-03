@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Core.Entities.Concrete;
 
 namespace Business.Constants
 {
@@ -37,6 +38,8 @@ namespace Business.Constants
         public static string UserDeletedSuccessfully = "Kullanıcı başarıyla silindi";
         public static string AllUsersListedSuccessfully = "Tüm kullanıcılar başarıyla listeledi";
         public static string GetUserByIdSuccessfully = "Kullanıcı detayları başarıyla getirildi.";
+        public static string GetUserClaimsSuccessfully="Kullanıcı rolleri başarıyla getirildi.";
+        
 
         //Customer
         public static string UserUpdatedSuccessfully = "Kullanıcı başarıyla güncellendi.";
@@ -59,5 +62,13 @@ namespace Business.Constants
         public static string ImageDeletedSuccessfully="Resim başarıyla silindi.";
         public static string ImageUpdatedSuccessfully="Resim başarıyla güncellendi.";
         public static string MaksimumImageLimitReached="Bir araç için izin verilen en fazla resim sayısına ulaştınız.";
+        
+        //Auth
+        public static string UserNotFound="Kullanıcı bulunamadı.";
+        public static string PasswordError="Şifre hatalı.";
+        public static string LoginSuccessfull="Giriş başarılı";
+        public static string UserAlreadyExists="Bu kullanıcı zaten mevcut.";
+        public static string UserRegistered="Kullanıcı başarıyla kaydedildi.";
+        public static string AccessTokenCreated="Access Token başarıyla oluşturuldu.";
     }
 }
