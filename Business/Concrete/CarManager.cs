@@ -52,11 +52,16 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(), Messages.GetCarDetailDtoSuccessfully);
         }
 
+
+
+        /// burada oynuyorum
         public IDataResult<List<CarDetailsByCarIdDto>> GetCarDetailsByCarId(int carId)
         {
-            return new SuccessDataResult<List<CarDetailsByCarIdDto>>(_carDal.GetCarDetailsByCarId(carId),Messages.GetCarDetailDtoSuccessfully);
+            return new SuccessDataResult<List<CarDetailsByCarIdDto>>(_carDal.GetCarDetailsByCarId(carId), Messages.GetCarDetailDtoSuccessfully);
         }
+        /////
 
+        
         public IDataResult<CarDetailsByCarIdWithDefaultPhotoDto> GetCarDetailsByCarIdWithDefaultImage(int carId, CarImage carImage)
         {
             return new SuccessDataResult<CarDetailsByCarIdWithDefaultPhotoDto>(

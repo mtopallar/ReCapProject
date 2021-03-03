@@ -21,8 +21,11 @@ namespace ConsoleUI
 
             CarImage carImageornek = new CarImage
             {
-                ImagePath="default resim",
+                ImagePath = "default resim",
             };
+
+            CarImageManager carImageManager = new CarImageManager(new EfCarImageDal());
+            var carimages = carImageManager.GetListByCarId(1).Data;
 
             EfCarDal carDal = new EfCarDal();
 
@@ -33,45 +36,69 @@ namespace ConsoleUI
             //Console.WriteLine(result.Description);
             //Console.WriteLine(result.DefaultImage.ImagePath);
 
+
             var result2 = carDal.GetCarDetailsByCarId(1);
 
-            foreach (var carDetailsByCarIdDto in result2)
-            {
-                Console.WriteLine(carDetailsByCarIdDto.CarName);
-                Console.WriteLine(carDetailsByCarIdDto.BrandName);
-                Console.WriteLine(carDetailsByCarIdDto.ColorName);
-                
-                foreach (var carImage in carDetailsByCarIdDto.CarImages)
-                {
-                    Console.WriteLine(carImage.ImagePath);
-                    Console.WriteLine(carImage.CarId);
-                    Console.WriteLine(carImage.Date);
-                    Console.WriteLine(carImage.Id);
-                }
-            }
-            
+            //Console.WriteLine(result2.CarName);
+            //Console.WriteLine(result2.BrandName);
+            //Console.WriteLine(result2.ColorName);
+
+
+            //Console.WriteLine(result2.CarName);
+            //Console.WriteLine(result2.BrandName);
+            //Console.WriteLine(result2.ColorName);
+            //Console.WriteLine(result2.CarImage.ImagePath);
+
+
+            //for (int i = 0; i < 1; i++)
+            //{
+
+            //    foreach (var VARIABLE in result2)
+            //    {
+            //        foreach (var variableCarImage in VARIABLE.CarImages)
+            //        {
+            //            Console.WriteLine(variableCarImage.ImagePath);
+            //        }
+            //    }
+            //}
+
+            //foreach (var carDetailsByCarIdDto in result2)
+            //{
+            //    Console.WriteLine(carDetailsByCarIdDto.CarName);
+            //    Console.WriteLine(carDetailsByCarIdDto.BrandName);
+            //    Console.WriteLine(carDetailsByCarIdDto.ColorName);
+
+            //    foreach (var carImage in carDetailsByCarIdDto.CarImages)
+            //    {
+            //        Console.WriteLine(carImage.ImagePath);
+            //        Console.WriteLine(carImage.CarId);
+            //        Console.WriteLine(carImage.Date);
+            //        Console.WriteLine(carImage.Id);
+            //    }
+            //}
+
 
 
             User user = new User
             {
-                FirstName="Engin",
-                LastName="Demiroğ",
-                Email="engin@mail.com",
-                Password="12345"
+                FirstName = "Engin",
+                LastName = "Demiroğ",
+                Email = "engin@mail.com",
+                Password = "12345"
             };
 
             Customer customer = new Customer
             {
-                UserId=2,
-                CompanyName="Kodlama.io"
+                UserId = 2,
+                CompanyName = "Kodlama.io"
             };
 
             Rental rental = new Rental
             {
                 //Id=4,
-                CarId=1,
-                CustomerId=1,
-                RentDate=DateTime.Now,
+                CarId = 1,
+                CustomerId = 1,
+                RentDate = DateTime.Now,
                 //ReturnDate=new DateTime(2021,02,26)
             };
 
@@ -141,7 +168,7 @@ namespace ConsoleUI
             //foreach (var carDetail in carManager.GetCarDetails().Data)
             //{
             //    var carlresimlist = carDetail.CarImages;
-                
+
             //    Console.WriteLine("Araç adı: {0} --- Marka adı: {1} --- Renk: {2} --- Günlük kiralama ücreti: {3}", carDetail.CarName, carDetail.BrandName, carDetail.ColorName, carDetail.DailyPrice);
             //}
 

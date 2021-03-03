@@ -90,15 +90,7 @@ namespace WebAPI.Controllers
             var checkCar = _carService.GetById(carId);
             if (checkCar.Data == null)
             {
-                return BadRequest(checkCar);
-            }
-            if (carId==0)
-            {
-                var result = _carService.GetCarDetails();
-                if (result.Success)
-                {
-                    return Ok(result);
-                }
+                return BadRequest("Araç bulunamadı");
             }
             var hasTheCarAnyPhoto = _carImageService.GetListByCarId(carId).Data.Count;
             if (hasTheCarAnyPhoto==0)
