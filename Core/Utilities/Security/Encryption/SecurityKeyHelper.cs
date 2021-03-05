@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Core.Utilities.Security.Encryption
 {
-    public class SecurityKeyHelper
+    public class SecurityKeyHelper //security key i byte[] formatına dönüştürmek için kullanıyoruz. çünkü asp.net in ve jwt nin istediği format byte[]. byte[] e dönüştürüp SecurityKey formatında return ediyoruz.
     {
         public static SecurityKey CreateSecurityKey(string securityKey)
         {
