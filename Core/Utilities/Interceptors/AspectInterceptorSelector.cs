@@ -14,7 +14,7 @@ namespace Core.Utilities.Interceptors
             var methodAttributes = type.GetMethod(method.Name)
                 .GetCustomAttributes<MethodInterceptionBaseAttribute>(true);
             classAttributes.AddRange(methodAttributes);
-
+            // yukarıdaki gibi classAttributes.Add(new PerformanceAspect) gibi bir kod ile mevcutta olan ve sonradan yazılacak tüm metodlarda performans aspectini devreye alabiliriz. Bu konum öyle bir nokta.
             return classAttributes.OrderBy(x => x.Priority).ToArray();
         }
     }

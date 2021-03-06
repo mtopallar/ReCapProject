@@ -9,7 +9,7 @@ namespace Core.Utilities.IoC
     {
         public static IServiceProvider ServiceProvider { get; private set; }
 
-        public static IServiceCollection Create(IServiceCollection services) //.NET in servislerini (service collectionlarını) al ve onları kendin build et. Bu kod webAPI ya da outofac de oluşturulan injectionları oluşturabilmemize yarar. Mesela bu tool ile istediğimiz herhangi bir interface in servisteki karşılığını bu tool ile alabiliyoruz.
+        public static IServiceCollection Create(IServiceCollection services) //.NET in servislerini (service collectionlarını) al ve onları kendin build et. Bu kod webAPI ya da autofac de oluşturulan injectionları oluşturabilmemize yarar. Mesela bu tool ile istediğimiz herhangi bir interface in servisteki karşılığını bu tool ile alabiliyoruz.
         {
             ServiceProvider = services.BuildServiceProvider();
             return services;

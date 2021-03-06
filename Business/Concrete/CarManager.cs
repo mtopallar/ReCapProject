@@ -5,6 +5,9 @@ using Business.Abstract;
 using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation.FluentValidation;
 using Core.Utilities.Results;
@@ -24,6 +27,8 @@ namespace Business.Concrete
         }
         [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
+        [CacheRemoveAspect("ICarService.Get")]//sadece "Get" yazarsak bellekteki tüm getleri siler. (Car için color için brand için tüm servislerdeki tüm getlerin cachelerini siler.)
+        [TransactionScopeAspect]
         public IResult Add(Car car)
         {
             
@@ -31,19 +36,21 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarAddedSuccessfully);
             
         }
+        
 
         public IResult Delete(Car car)
         {
             _carDal.Delete(car);
             return new SuccessResult(Messages.CarDeletedSuccessfully);
         }
-
+        [CacheAspect] // key = Business.Concrete.CarManager.GetAll
+        [PerformanceAspect(5)]
         public IDataResult<List<Car>> GetAll()
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.AllCarsListedSuccessfully);
         }
-
-        public IDataResult<Car> GetById(int id)
+        
+        public IDataResult<Car> GetById(int id) // key = Business.Concrete.CarManager.GetById(idnin değeri)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id), Messages.GetCarByIdSuccessfully);
         }
@@ -55,12 +62,11 @@ namespace Business.Concrete
 
 
 
-        /// burada oynuyorum
         public IDataResult<List<CarDetailsByCarIdDto>> GetCarDetailsByCarId(int carId)
         {
             return new SuccessDataResult<List<CarDetailsByCarIdDto>>(_carDal.GetCarDetailsByCarId(carId), Messages.GetCarDetailDtoSuccessfully);
         }
-        /////
+        
 
         
         public IDataResult<CarDetailsByCarIdWithDefaultPhotoDto> GetCarDetailsByCarIdWithDefaultImage(int carId, CarImage carImage)
