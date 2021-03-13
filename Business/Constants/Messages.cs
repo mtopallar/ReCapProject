@@ -56,6 +56,7 @@ namespace Business.Constants
         public static string GetAllRentalsSuccessfully = "Tüm kiralama işlemleri başarıyla listelendi.";
         public static string GetRentalByIdSuccessfully = "Kira detayları başarıyla getirildi.";
         public static string RentalUpdatedSuccessfully = "Kira işlemi başarıyla güncellendi.";
+        public static string RentDetailsListedSuccessfully="Kira detayları listesi başarıyla getirildi.";
         
         //CarImage
         public static string ImageAddedSuccessfully="Resim başarıyla eklendi.";
@@ -71,5 +72,6 @@ namespace Business.Constants
         public static string UserRegistered="Kullanıcı başarıyla kaydedildi.";
         public static string AccessTokenCreated="Access Token başarıyla oluşturuldu.";
         public static string AuthorizationDenied = "Yetkiniz yok.";
+        
     }
 }

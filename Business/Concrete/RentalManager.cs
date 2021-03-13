@@ -8,6 +8,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -48,6 +49,12 @@ namespace Business.Concrete
         public IDataResult<Rental> GetById(int id)
         {
             return new SuccessDataResult<Rental>(_rentalDal.Get(r => r.Id == id), Messages.GetRentalByIdSuccessfully);
+        }
+
+        public IDataResult<List<CarRentalDto>> GetRentalDetailsList()
+        {
+            return new SuccessDataResult<List<CarRentalDto>>(_rentalDal.GetRentalDetailsList(),
+                Messages.RentDetailsListedSuccessfully);
         }
 
         public IResult Update(Rental rental)
