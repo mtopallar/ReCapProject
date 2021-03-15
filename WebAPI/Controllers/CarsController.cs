@@ -18,7 +18,7 @@ namespace WebAPI.Controllers
         private static IWebHostEnvironment _webHostEnvironment;
         private ICarImageService _carImageService;
 
-        public CarsController(ICarService carService,IWebHostEnvironment webHostEnvironment,ICarImageService carImageService)
+        public CarsController(ICarService carService, IWebHostEnvironment webHostEnvironment, ICarImageService carImageService)
         {
             _carService = carService;
             _webHostEnvironment = webHostEnvironment;
@@ -92,17 +92,18 @@ namespace WebAPI.Controllers
             {
                 return BadRequest("Araç bulunamadı");
             }
-            var hasTheCarAnyPhoto = _carImageService.GetListByCarId(carId).Data.Count;
-            if (hasTheCarAnyPhoto==0)
+            var hasTheCarAnyPhoto = _carImageService.GetListByCarId(carId).Data;
+            if (hasTheCarAnyPhoto.Count == 0)
             {
                 string imagePath = _webHostEnvironment.WebRootPath + @"\CarImages\";
                 var resultWithDefaultPhoto = _carService.GetCarDetailsByCarIdWithDefaultImage(carId,
-                    new CarImage {ImagePath = imagePath + "CarRentalDefault.jpg"});
+                    new CarImage { ImagePath = imagePath + "CarRentalDefault.jpg" });
                 return Ok(resultWithDefaultPhoto);
             }
             var resultWithCarOwnPhoto = _carService.GetCarDetailsByCarId(carId);
-                return Ok(resultWithCarOwnPhoto);
-            
+            resultWithCarOwnPhoto.Data.CarImages = hasTheCarAnyPhoto;
+            return Ok(resultWithCarOwnPhoto);
+
         }
 
         [HttpPost("add")]

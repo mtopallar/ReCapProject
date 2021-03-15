@@ -32,46 +32,33 @@ namespace DataAccess.Concrete.EntityFramework
             }
 
         }
+        
 
-
-
-        //Expression<Func<Car, bool>> filter = null kullanılabilir. Ama id verilmezse tüm araçların resimleri aynı anda döner.
-
-        public List<CarDetailsByCarIdDto> GetCarDetailsByCarId(int carId)
+        public CarDetailsByCarIdDto GetCarDetailsByCarId(int carId)
         {
 
             using (ReCapContext context = new ReCapContext())
             {
 
                 var result = from car in context.Cars.Where(c => c.Id == carId)
-                    join color in context.Colors on car.ColorId equals color.Id
-                    join brand in context.Brands on car.BrandId equals brand.Id
-                    join image in context.CarImages on car.Id equals image.CarId
-                    select new CarDetailsByCarIdDto
-                    {
-                        BrandName = brand.Name,
-                        CarName = car.CarName,
-                        ColorName = color.Name,
-                        DailyPrice = car.DailyPrice,
-                        Description = car.Description,
-                        ModelYear = car.ModelYear,
-                        CarImages = new List<CarImage>
-                        {
-                            new CarImage
-                            {
-                                CarId = image.CarId,
-                                Date = image.Date,
-                                Id = image.Id,
-                                ImagePath = image.ImagePath
+                             join color in context.Colors on car.ColorId equals color.Id
+                             join brand in context.Brands on car.BrandId equals brand.Id
+                             select new CarDetailsByCarIdDto
+                             {
+                                 BrandName = brand.Name,
+                                 CarName = car.CarName,
+                                 ColorName = color.Name,
+                                 DailyPrice = car.DailyPrice,
+                                 Description = car.Description,
+                                 ModelYear = car.ModelYear,
+                                 
+                                 //DTO'daki List<CarImage> a burada atama yapmadım, çünkü araç resmi adedi kadar aracı tekrar tekrar dönüyor. Bu gereksiz birşey. Bunun yerine buradan dönen DTO'nun List<CarImage> propertysine Controllerda set ediyorum.
+                             };
 
-                            }
-                        }
-
-                    };
-
-                return result.ToList();
+                return result.SingleOrDefault();
             }
         }
+        
 
         public CarDetailsByCarIdWithDefaultPhotoDto GetCarDetailsByCarIdWithDefaultImage(int carId, CarImage carImage)
         {
