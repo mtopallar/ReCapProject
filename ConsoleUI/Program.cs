@@ -20,17 +20,12 @@ namespace ConsoleUI
             CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
             RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-            CarImage carImageornek = new CarImage
-            {
-                ImagePath = "default resim",
-            };
 
             CarImageManager carImageManager = new CarImageManager(new EfCarImageDal());
             var carimages = carImageManager.GetListByCarId(1).Data;
 
             EfCarDal carDal = new EfCarDal();
 
-            var result = carDal.GetCarDetailsByCarIdWithDefaultImage(2, carImageornek);
 
             //Console.WriteLine(result.BrandName);
             //Console.WriteLine(result.ColorName);
