@@ -25,6 +25,8 @@ namespace Business.Constants
         public static string GetCarsByBrandIdSuccessfully = "Markaya göre araç listesi başarıyla getirildi.";
         public static string GetCarsByColorIdSuccessfully = "Renge göre araç listesi başarıyla getirildi.";
         public static string CarUpdatedSuccessfully = "Araç başarıyla güncellendi.";
+        public static string GetCarDetailsByBrandIdSuccessfully="Marka bilgisine göre araç detayları başarıyla getirildi.";
+        public static string GetCarDetailsByColorIdSuccessfully="Renk bilgisine göre araç detayları başarıyla getirildi.";
 
         //Color
         public static string ColorAddedSuccessfully = "Renk başarıyla eklendi";
@@ -72,6 +74,6 @@ namespace Business.Constants
         public static string UserRegistered="Kullanıcı başarıyla kaydedildi.";
         public static string AccessTokenCreated="Access Token başarıyla oluşturuldu.";
         public static string AuthorizationDenied = "Yetkiniz yok.";
-        
+       
     }
 }

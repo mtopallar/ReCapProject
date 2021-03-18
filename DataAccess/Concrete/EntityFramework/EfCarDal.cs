@@ -23,6 +23,7 @@ namespace DataAccess.Concrete.EntityFramework
                              join brand in context.Brands on car.BrandId equals brand.Id
                              select new CarDetailDto
                              {
+                                 CarId = car.Id,
                                  CarName = car.CarName,
                                  BrandName = brand.Name,
                                  ColorName = color.Name,
@@ -32,7 +33,45 @@ namespace DataAccess.Concrete.EntityFramework
             }
 
         }
-        
+
+        public List<CarDetailDto> GetCarDetailsByBrandId(int brandId)
+        {
+            using (ReCapContext context = new ReCapContext())
+            {
+                var result = from car in context.Cars.Where(c=> c.BrandId == brandId)
+                    join color in context.Colors on car.ColorId equals color.Id
+                    join brand in context.Brands on car.BrandId equals brand.Id
+                    select new CarDetailDto
+                    {
+                        CarId = car.Id,
+                        BrandName = brand.Name,
+                        CarName = car.CarName,
+                        ColorName = color.Name,
+                        DailyPrice = car.DailyPrice
+                    };
+                return result.ToList();
+            }
+        }
+
+        public List<CarDetailDto> GetCarDetailsByColorId(int colorId)
+        {
+            using (ReCapContext context = new ReCapContext())
+            {
+                var result = from car in context.Cars.Where(c=> c.ColorId == colorId)
+                    join color in context.Colors on car.ColorId equals color.Id
+                    join brand in context.Brands on car.BrandId equals brand.Id
+                    select new CarDetailDto
+                    {
+                        CarId = car.Id,
+                        BrandName = brand.Name,
+                        CarName = car.CarName,
+                        ColorName = color.Name,
+                        DailyPrice = car.DailyPrice
+                    };
+                return result.ToList();
+            }
+        }
+
 
         public CarDetailsByCarIdDto GetCarDetailsByCarId(int carId)
         {
