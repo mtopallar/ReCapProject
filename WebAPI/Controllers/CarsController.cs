@@ -119,9 +119,9 @@ namespace WebAPI.Controllers
             var hasTheCarAnyPhoto = _carImageService.GetListByCarId(carId).Data;
             if (hasTheCarAnyPhoto.Count == 0)
             {
-                string imagePath = _webHostEnvironment.WebRootPath + @"\CarImages\";
+                //string imagePath = _webHostEnvironment.WebRootPath + @"\CarImages\";
                 List<CarImage> carImages = new List<CarImage>
-                    {new CarImage {CarId = carId, ImagePath = imagePath + "CarRentalDefault.jpg"}};
+                    {new CarImage {CarId = carId, ImagePath = /*imagePath +*/ "CarRentalDefault.jpg"}};
                 var resultWithDefaultPhoto = _carService.GetCarDetailsByCarId(carId);
                 resultWithDefaultPhoto.Data.CarImages = carImages;
                 return Ok(resultWithDefaultPhoto);

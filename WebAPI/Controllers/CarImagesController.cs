@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
 
             if (imageForUploads.UploadedImage != null)
             {
-                _carPhotoFileHelper.AddImage(imageForUploads, carId);
+               return _carPhotoFileHelper.AddImage(imageForUploads, carId);
             }
             return "Lütfen yüklemek istediğiniz fotoğraf(lar)ı seçin.";
             
