@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business.Abstract;
+using Core.Utilities.Results;
 using Entities.Concrete;
+using Entities.DTOs;
 using Microsoft.AspNetCore.Hosting;
+using WebAPI.Helpers;
 
 namespace WebAPI.Controllers
 {
@@ -17,12 +20,14 @@ namespace WebAPI.Controllers
         private ICarService _carService;
         private static IWebHostEnvironment _webHostEnvironment;
         private ICarImageService _carImageService;
+        private ICarPhotoFileHelper _carPhotoFileHelper;
 
-        public CarsController(ICarService carService, IWebHostEnvironment webHostEnvironment, ICarImageService carImageService)
+        public CarsController(ICarService carService, IWebHostEnvironment webHostEnvironment, ICarImageService carImageService, ICarPhotoFileHelper carPhotoFileHelper)
         {
             _carService = carService;
             _webHostEnvironment = webHostEnvironment;
             _carImageService = carImageService;
+            _carPhotoFileHelper = carPhotoFileHelper;
         }
 
         [HttpGet("getbyid")]
@@ -64,7 +69,7 @@ namespace WebAPI.Controllers
         [HttpGet("getcardetailsbybrandid")]   //bunu kullan
         public IActionResult GetCarsDetailsByBrandId(int brandId)
         {
-            var result = _carService.GetCarDetailsByBrandId(brandId);
+            var result = _carPhotoFileHelper.GetCarListByBrandIdWithSingleImage(brandId);
             if (result.Success)
             {
                 return Ok(result);
@@ -88,7 +93,7 @@ namespace WebAPI.Controllers
         [HttpGet("getcardetailsbycolorid")]   //bunu kullan
         public IActionResult GetCarDetailsByColorId(int colorId)
         {
-            var result = _carService.GetCarDetailsByColorId(colorId);
+            var result = _carPhotoFileHelper.GetCarListByColorIdWithSingleImage(colorId);
             if (result.Success)
             {
                 return Ok(result);
@@ -100,7 +105,8 @@ namespace WebAPI.Controllers
         [HttpGet("getcardetails")]
         public IActionResult GetCarDetails()
         {
-            var result = _carService.GetCarDetails();
+            var result = _carPhotoFileHelper.GetCarListWithSingleImage();
+
             if (result.Success)
             {
                 return Ok(result);
@@ -108,6 +114,9 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
+
+
+
         [HttpGet("getcarimagedetails")]
         public IActionResult GetCarImageDetails(int carId)
         {

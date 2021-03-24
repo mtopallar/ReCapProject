@@ -27,6 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  CarName = car.CarName,
                                  BrandName = brand.Name,
                                  ColorName = color.Name,
+                                 Description = car.Description,
                                  DailyPrice = car.DailyPrice
                              };
                 return result.ToList();
@@ -47,6 +48,7 @@ namespace DataAccess.Concrete.EntityFramework
                         BrandName = brand.Name,
                         CarName = car.CarName,
                         ColorName = color.Name,
+                        Description = car.Description,
                         DailyPrice = car.DailyPrice
                     };
                 return result.ToList();
@@ -66,6 +68,7 @@ namespace DataAccess.Concrete.EntityFramework
                         BrandName = brand.Name,
                         CarName = car.CarName,
                         ColorName = color.Name,
+                        Description = car.Description,
                         DailyPrice = car.DailyPrice
                     };
                 return result.ToList();
