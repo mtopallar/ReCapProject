@@ -34,20 +34,36 @@ namespace WebAPI.Controllers
 
         [HttpPost("add")]
         //Postman'da post ederken Key olarak UploadedImage Value olarak resimler eklenecek. Çoklu eklemeye izin var. bir de carId değeri vermelisin.
-        public string Add([FromForm] ImageForUpload imageForUploads, [FromForm] int carId)
+        //public string Add([FromForm] ImageForUpload imageForUploads, [FromForm] int carId)
+        //{
+        //    if (carId==0)
+        //    {
+        //        return "Lütfen işlem yapmak istediğiniz aracı seçin.";
+        //    }
+
+        //    if (imageForUploads.UploadedImage != null)
+        //    {
+        //       return _carPhotoFileHelper.AddImage(imageForUploads, carId);
+        //    }
+        //    return "Lütfen yüklemek istediğiniz fotoğraf(lar)ı seçin.";
+            
+        //}
+
+
+        public IActionResult Add([FromForm] CarImage carImage,[FromForm] List<IFormFile> files)
         {
-            if (carId==0)
+            
+            var result = _carImageService.Add2(carImage, files);
+            if (result.Success)
             {
-                return "Lütfen işlem yapmak istediğiniz aracı seçin.";
+                return Ok(result);
             }
 
-            if (imageForUploads.UploadedImage != null)
-            {
-               return _carPhotoFileHelper.AddImage(imageForUploads, carId);
-            }
-            return "Lütfen yüklemek istediğiniz fotoğraf(lar)ı seçin.";
-            
+            return BadRequest(result);
+
         }
+
+
 
         [HttpPost("update")]
         public string Update([FromBody] CarImage carImage)
