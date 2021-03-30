@@ -49,16 +49,16 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ImageDeletedSuccessfully);
         }
 
-        public IDataResult<CarImage> GetById(int id)
+        public IDataResult<CarImage> GetImageById(int id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(i => i.Id == id));
         }
         
 
-        public IDataResult<List<CarImage>> GetListByCarId(int carId)
+        public IDataResult<List<CarImage>> GetImageListByCarId(int carId)
         {
             var result = _carImageDal.GetAll(i => i.CarId == carId);
-            if (result==null)
+            if (result.Count==0)
             {
                 return new SuccessDataResult<List<CarImage>>(IfCarHasNoPhotoGetDefaultPhotoInTheList());
             }
@@ -67,7 +67,7 @@ namespace Business.Concrete
 
         public IDataResult<CarImage> GetCarMainImageByCarId(int carId)
         {
-            var result = _carImageDal.Get(i => i.CarId == carId && i.MainPhoto == true);
+            var result = _carImageDal.Get(i => i.CarId == carId && i.MainPhoto);
             if (result==null)
             {
                 return new SuccessDataResult<CarImage>(IfCarHasNoPhotoGetDefaultPhotoSingleImage());

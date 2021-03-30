@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -25,14 +27,13 @@ namespace Business.Concrete
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            //if (rental.ReturnDate == DateTime.MinValue)
-            //{
-            //    return new ErrorResult(Messages.InvalidReturnDate);
-            //}
-
+            var result = BusinessRules.Run(CheckRentability(rental));
+            if (result!= null)
+            {
+                return result;
+            }
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RantalAddedSuccessfully);
-            
         }
 
         public IResult Delete(Rental rental)
@@ -59,8 +60,24 @@ namespace Business.Concrete
 
         public IResult Update(Rental rental)
         {
+            var result = BusinessRules.Run(CheckRentability(rental));
+            if (result!= null)
+            {
+                return result;
+            }
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdatedSuccessfully);
+        }
+
+        private IResult CheckRentability(Rental rental)
+        {
+            var rentals = _rentalDal.GetAll(r => r.CarId == rental.CarId);
+            if (rentals.Any(r=>r.ReturnDate>=rental.RentDate && r.RentDate<=rental.ReturnDate))
+            {
+                return new ErrorResult(Messages.RentalDateError);
+            }
+
+            return new SuccessResult();
         }
     }
 }

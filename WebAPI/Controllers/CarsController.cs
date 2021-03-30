@@ -18,16 +18,14 @@ namespace WebAPI.Controllers
     public class CarsController : ControllerBase
     {
         private ICarService _carService;
-        private static IWebHostEnvironment _webHostEnvironment;
-        private ICarImageService _carImageService;
-        private ICarPhotoFileHelper _carPhotoFileHelper;
+        //private static IWebHostEnvironment _webHostEnvironment;
+        //private ICarImageService _carImageService;
+        //private ICarPhotoFileHelper _carPhotoFileHelper;
 
-        public CarsController(ICarService carService, IWebHostEnvironment webHostEnvironment, ICarImageService carImageService, ICarPhotoFileHelper carPhotoFileHelper)
+        public CarsController(ICarService carService)
         {
             _carService = carService;
-            _webHostEnvironment = webHostEnvironment;
-            _carImageService = carImageService;
-            _carPhotoFileHelper = carPhotoFileHelper;
+           
         }
 
         [HttpGet("getbyid")]
@@ -65,18 +63,7 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
-
-        [HttpGet("getcardetailsbybrandid")]   //bunu kullan
-        public IActionResult GetCarsDetailsByBrandId(int brandId)
-        {
-            var result = _carPhotoFileHelper.GetCarListByBrandIdWithSingleImage(brandId);
-            if (result.Success)
-            {
-                return Ok(result);
-            }
-
-            return BadRequest(result);
-        }
+        
 
         [HttpGet("getcarsbycolorid")]
         public IActionResult GetCarsByColorId(int colorId)
@@ -90,10 +77,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getcardetailsbycolorid")]   //bunu kullan
-        public IActionResult GetCarDetailsByColorId(int colorId)
+        [HttpGet("getcarsdetails")]
+        public IActionResult GetCarsDetails()
         {
-            var result = _carPhotoFileHelper.GetCarListByColorIdWithSingleImage(colorId);
+            var result = _carService.GetCarsDetails();
             if (result.Success)
             {
                 return Ok(result);
@@ -102,11 +89,10 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("getcardetails")]
-        public IActionResult GetCarDetails()
+        [HttpGet("getcarsdetailsbybrandid")]
+        public IActionResult GetCarsDetailsByBrandId(int brandId)
         {
-            var result = _carPhotoFileHelper.GetCarListWithSingleImage();
-
+            var result = _carService.GetCarsDetailsByBrandId(brandId);
             if (result.Success)
             {
                 return Ok(result);
@@ -115,32 +101,42 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
-
-
-        [HttpGet("getcarimagedetails")]
-        public IActionResult GetCarImageDetails(int carId)
+        [HttpGet("getcarsdetailsbycolorid")]
+        public IActionResult GetCarsDetailsByColorId(int colorId)
         {
-            var checkCar = _carService.GetById(carId);
-            if (checkCar.Data == null)
+            var result = _carService.GetCarsDetailsByColorId(colorId);
+            if (result.Success)
             {
-                return BadRequest("Araç bulunamadı");
+                return Ok(result);
             }
-            var hasTheCarAnyPhoto = _carImageService.GetListByCarId(carId).Data;
-            if (hasTheCarAnyPhoto.Count == 0)
-            {
-                //string imagePath = _webHostEnvironment.WebRootPath + @"\CarImages\";
-                List<CarImage> carImages = new List<CarImage>
-                    {new CarImage {CarId = carId, ImagePath = /*imagePath +*/ "CarRentalDefault.jpg"}};
-                var resultWithDefaultPhoto = _carService.GetCarDetailsByCarId(carId);
-                resultWithDefaultPhoto.Data.CarImages = carImages;
-                return Ok(resultWithDefaultPhoto);
-            }
-            var resultWithCarOwnPhoto = _carService.GetCarDetailsByCarId(carId);
-            resultWithCarOwnPhoto.Data.CarImages = hasTheCarAnyPhoto;
-            return Ok(resultWithCarOwnPhoto);
 
+            return BadRequest(result);
         }
 
+        [HttpGet("getcarsdetailsbybrandidandcolorid")]
+        public IActionResult GetCarsDetailsByBrandIdAndColorId(int brandId, int colorId)
+        {
+            var result = _carService.GetCarsDetailsByBrandIdAndColorId(brandId, colorId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpGet("getcardetailsbycarid")]
+        public IActionResult GetCarDetailsByCarId(int carId)
+        {
+            var result = _carService.GetCarDetailsByCarId(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+       
         [HttpPost("add")]
         public IActionResult Add(Car car)
         {

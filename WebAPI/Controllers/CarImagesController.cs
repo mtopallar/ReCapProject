@@ -25,7 +25,7 @@ namespace WebAPI.Controllers
             _carImageService = carImageService;
         }
         
-
+        [HttpPost("add")]
         public IActionResult Add([FromForm] CarImage carImage,[FromForm] IFormFile file)
         {
             var result = _carImageService.Add(carImage, file);
@@ -61,19 +61,43 @@ namespace WebAPI.Controllers
 
             return BadRequest(result);
         }
-       
 
-        [HttpGet("getimagebyid")]
-        public IDataResult<CarImage> GetImage(int id)
+        [HttpGet("getcarmainimagebycarid")]
+        public IActionResult GetCarMainImageByCarId(int carId)
         {
-            var result = _carImageService.GetById(id);
-            if (result.Data==null)
+            var result = _carImageService.GetCarMainImageByCarId(carId);
+            if (result.Success)
             {
-                return new ErrorDataResult<CarImage>("Resim bulunamadı");
+                return Ok(result);
             }
 
-            return result;
+            return BadRequest(result);
         }
+
+        [HttpGet("getimagebyid")]
+        public IActionResult GetImageById(int id)
+        {
+            var result = _carImageService.GetImageById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpGet("getimagelistbycarid")]
+        public IActionResult GetImageListByCarId(int carId)
+        {
+            var result = _carImageService.GetImageListByCarId(carId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
     }
 }
 
