@@ -60,7 +60,7 @@ namespace WebAPI.Helpers
                         fileStream.Flush();
                         var carImageForDb = new CarImage
                         { CarId = carId, ImagePath = guIdName + fileExtension, Date = DateTime.Now };
-                        _carImageService.Add(carImageForDb);
+                        //_carImageService.Add(carImageForDb);
                     }
 
                     sayac += 1;
