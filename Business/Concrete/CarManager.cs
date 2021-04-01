@@ -21,10 +21,12 @@ namespace Business.Concrete
     public class CarManager : ICarService
     {
         private ICarDal _carDal;
+        private ICarImageService _carImageService;
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, ICarImageService carImageService)
         {
             _carDal = carDal;
+            _carImageService = carImageService;
         }
         [SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
@@ -32,12 +34,12 @@ namespace Business.Concrete
         [TransactionScopeAspect]
         public IResult Add(Car car)
         {
-            
+
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAddedSuccessfully);
-            
+
         }
-        
+
 
         public IResult Delete(Car car)
         {
@@ -50,7 +52,7 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.AllCarsListedSuccessfully);
         }
-        
+
         public IDataResult<Car> GetById(int id) // key = Business.Concrete.CarManager.GetById(idnin değeri)
         {
             return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == id), Messages.GetCarByIdSuccessfully);
@@ -58,19 +60,62 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarsDetails()
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(), Messages.GetCarDetailDtoSuccessfully);
+            var carDetailList = new List<CarDetailDto>();
+            var allCars = _carDal.GetCarsDetails();
+            
+            foreach (var carDetailDto in allCars)
+            {
+                var mainImage = _carImageService.GetCarMainImageByCarId(carDetailDto.CarId);
+                if (mainImage.Data==null)
+                {
+                    CarDetailDto carDetailWithDefault = new CarDetailDto
+                    {
+                        CarId = carDetailDto.CarId,
+                        BrandId = carDetailDto.BrandId,
+                        ColorId = carDetailDto.ColorId,
+                        CarName = carDetailDto.CarName,
+                        BrandName = carDetailDto.BrandName,
+                        ColorName = carDetailDto.ColorName,
+                        DailyPrice = carDetailDto.DailyPrice,
+                        Description = carDetailDto.Description,
+                        ModelYear = carDetailDto.ModelYear,
+                        MainImage = new CarImage
+                        {
+                            ImagePath = "CarRentalDefault.jpg"
+                        } 
+                    };
+                    carDetailList.Add(carDetailWithDefault);
+                    
+                }
+                CarDetailDto carDetail = new CarDetailDto
+                {
+                    CarId = carDetailDto.CarId,
+                    BrandId = carDetailDto.BrandId,
+                    ColorId = carDetailDto.ColorId,
+                    CarName = carDetailDto.CarName,
+                    BrandName = carDetailDto.BrandName,
+                    ColorName = carDetailDto.ColorName,
+                    DailyPrice = carDetailDto.DailyPrice,
+                    Description = carDetailDto.Description,
+                    ModelYear = carDetailDto.ModelYear,
+                    MainImage = mainImage.Data
+                };
+               carDetailList.Add(carDetail);
+            }
+
+            return new SuccessDataResult<List<CarDetailDto>>(carDetailList, Messages.GetCarDetailDtoSuccessfully);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarsDetailsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(c=>c.BrandId==brandId),
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(c => c.BrandId == brandId),
                 Messages.GetCarDetailsByBrandIdSuccessfully);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarsDetailsByColorId(int colorId)
         {
             return new SuccessDataResult<List<CarDetailDto>>(
-                _carDal.GetCarsDetails(c=>c.ColorId==colorId),Messages.GetCarDetailsByColorIdSuccessfully);
+                _carDal.GetCarsDetails(c => c.ColorId == colorId), Messages.GetCarDetailsByColorIdSuccessfully);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarsDetailsByBrandIdAndColorId(int brandId, int colorId)
@@ -82,7 +127,7 @@ namespace Business.Concrete
 
         public IDataResult<CarDetailDto> GetCarDetailsByCarId(int carId)
         {
-            return new SuccessDataResult<CarDetailDto>(_carDal.GetCarsDetails(c=>c.CarId==carId).FirstOrDefault(), Messages.GetCarDetailDtoSuccessfully);
+            return new SuccessDataResult<CarDetailDto>(_carDal.GetCarsDetails(c => c.CarId == carId).FirstOrDefault(), Messages.GetCarDetailDtoSuccessfully);
         }
 
 

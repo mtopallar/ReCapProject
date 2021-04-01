@@ -93,6 +93,11 @@ namespace Business.Concrete
             return new SuccessResult(Messages.ImageUpdatedSuccessfully);
         }
 
+        public IDataResult<List<CarImage>> GetAll()
+        {
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
+        }
+
         private IResult CheckCarImageCount(int carId)
         {
             var result = _carImageDal.GetAll(i => i.CarId == carId).Count;
@@ -138,23 +143,27 @@ namespace Business.Concrete
 
         private List<CarImage> IfCarHasNoPhotoGetDefaultPhotoInTheList()
         {
+            //var realpath = ImagePath = $@"{Environment.CurrentDirectory}\wwwroot\CarImages\CarRentalDefault.jpg"
             var defaultImageInImageList = new List<CarImage>();
             var carImage = new CarImage
             {
-                ImagePath = $@"{Environment.CurrentDirectory}\wwwroot\CarImages\CarRentalDefault.jpg"
+                ImagePath = "CarRentalDefault.jpg"
             };
             defaultImageInImageList.Add(carImage);
             return defaultImageInImageList;
         }
         
         private CarImage IfCarHasNoPhotoGetDefaultPhotoSingleImage()
-        {
+        { 
+          //var realpath = ImagePath = $@"{Environment.CurrentDirectory}\wwwroot\CarImages\CarRentalDefault.jpg"
             var carImage = new CarImage
             {
-                ImagePath = $@"{Environment.CurrentDirectory}\wwwroot\CarImages\CarRentalDefault.jpg"
+                ImagePath = "CarRentalDefault.jpg"
             };
 
             return carImage;
         }
+
+        
     }
 }

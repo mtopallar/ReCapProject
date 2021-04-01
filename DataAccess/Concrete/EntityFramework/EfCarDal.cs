@@ -14,6 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, ReCapContext>, ICarDal
     {
+       
         public List<CarDetailDto> GetCarsDetails(Expression<Func<CarDetailDto, bool>> filter = null)
         {
             using (ReCapContext context = new ReCapContext())
@@ -21,6 +22,7 @@ namespace DataAccess.Concrete.EntityFramework
                 var result = from car in context.Cars
                     join color in context.Colors on car.ColorId equals color.Id
                     join brand in context.Brands on car.BrandId equals brand.Id
+                    //join image in context.CarImages on car.Id equals image.CarId where image.MainPhoto
                     select new CarDetailDto
                     {
                         CarId = car.Id,
@@ -31,7 +33,8 @@ namespace DataAccess.Concrete.EntityFramework
                         ColorName = color.Name,
                         Description = car.Description,
                         DailyPrice = car.DailyPrice,
-                        ModelYear = car.ModelYear
+                        ModelYear = car.ModelYear,
+                        //MainImage = image
                     };
 
                 return filter==null? result.ToList():result.Where(filter).ToList();
