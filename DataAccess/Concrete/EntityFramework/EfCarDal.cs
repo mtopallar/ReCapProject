@@ -14,30 +14,28 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, ReCapContext>, ICarDal
     {
-       
+
         public List<CarDetailDto> GetCarsDetails(Expression<Func<CarDetailDto, bool>> filter = null)
         {
             using (ReCapContext context = new ReCapContext())
             {
                 var result = from car in context.Cars
-                    join color in context.Colors on car.ColorId equals color.Id
-                    join brand in context.Brands on car.BrandId equals brand.Id
-                    //join image in context.CarImages on car.Id equals image.CarId where image.MainPhoto
-                    select new CarDetailDto
-                    {
-                        CarId = car.Id,
-                        BrandId = brand.Id,
-                        ColorId = color.Id,
-                        CarName = car.CarName,
-                        BrandName = brand.Name,
-                        ColorName = color.Name,
-                        Description = car.Description,
-                        DailyPrice = car.DailyPrice,
-                        ModelYear = car.ModelYear,
-                        //MainImage = image
-                    };
+                             join color in context.Colors on car.ColorId equals color.Id
+                             join brand in context.Brands on car.BrandId equals brand.Id
+                             select new CarDetailDto
+                             {
+                                 CarId = car.Id,
+                                 BrandId = brand.Id,
+                                 ColorId = color.Id,
+                                 CarName = car.CarName,
+                                 BrandName = brand.Name,
+                                 ColorName = color.Name,
+                                 Description = car.Description,
+                                 DailyPrice = car.DailyPrice,
+                                 ModelYear = car.ModelYear,
+                             };
 
-                return filter==null? result.ToList():result.Where(filter).ToList();
+                return filter == null ? result.ToList() : result.Where(filter).ToList();
             }
         }
 
@@ -120,7 +118,7 @@ namespace DataAccess.Concrete.EntityFramework
         //                         DailyPrice = car.DailyPrice,
         //                         Description = car.Description,
         //                         ModelYear = car.ModelYear,
-                                 
+
         //                         //DTO'daki List<CarImage> a burada atama yapmadım, çünkü araç resmi adedi kadar aracı tekrar tekrar dönüyor. Bu gereksiz birşey. Bunun yerine buradan dönen DTO'nun List<CarImage> propertysine Controllerda set ediyorum.
         //                     };
 
@@ -128,6 +126,6 @@ namespace DataAccess.Concrete.EntityFramework
         //    }
         //}
 
-       
+
     }
 }

@@ -6,8 +6,8 @@ using Entities.Concrete;
 
 namespace Entities.DTOs
 {
-    public class CarDetailDto:CarDetailDtoWithoutImage,IDto
+    public class CarDetailDtoWithImageList : CarDetailDtoWithoutImage,IDto   //Gerekmez ise silinecek.
     {
-        public CarImage MainImage { get; set; }
+    public List<CarImage> CarImages { get; set; }
     }
 }

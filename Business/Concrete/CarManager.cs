@@ -60,74 +60,41 @@ namespace Business.Concrete
 
         public IDataResult<List<CarDetailDto>> GetCarsDetails()
         {
-            var carDetailList = new List<CarDetailDto>();
-            var allCars = _carDal.GetCarsDetails();
-            
-            foreach (var carDetailDto in allCars)
-            {
-                var mainImage = _carImageService.GetCarMainImageByCarId(carDetailDto.CarId);
-                if (mainImage.Data==null)
-                {
-                    CarDetailDto carDetailWithDefault = new CarDetailDto
-                    {
-                        CarId = carDetailDto.CarId,
-                        BrandId = carDetailDto.BrandId,
-                        ColorId = carDetailDto.ColorId,
-                        CarName = carDetailDto.CarName,
-                        BrandName = carDetailDto.BrandName,
-                        ColorName = carDetailDto.ColorName,
-                        DailyPrice = carDetailDto.DailyPrice,
-                        Description = carDetailDto.Description,
-                        ModelYear = carDetailDto.ModelYear,
-                        MainImage = new CarImage
-                        {
-                            ImagePath = "CarRentalDefault.jpg"
-                        } 
-                    };
-                    carDetailList.Add(carDetailWithDefault);
-                    
-                }
-                CarDetailDto carDetail = new CarDetailDto
-                {
-                    CarId = carDetailDto.CarId,
-                    BrandId = carDetailDto.BrandId,
-                    ColorId = carDetailDto.ColorId,
-                    CarName = carDetailDto.CarName,
-                    BrandName = carDetailDto.BrandName,
-                    ColorName = carDetailDto.ColorName,
-                    DailyPrice = carDetailDto.DailyPrice,
-                    Description = carDetailDto.Description,
-                    ModelYear = carDetailDto.ModelYear,
-                    MainImage = mainImage.Data
-                };
-               carDetailList.Add(carDetail);
-            }
-
-            return new SuccessDataResult<List<CarDetailDto>>(carDetailList, Messages.GetCarDetailDtoSuccessfully);
+            var carDetailDtoList = _carDal.GetCarsDetails();
+            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssigerForCarDetailDtos(carDetailDtoList), Messages.GetCarDetailDtoSuccessfully);
         }
+
+        
 
         public IDataResult<List<CarDetailDto>> GetCarsDetailsByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(c => c.BrandId == brandId),
+            var carDetailDtoListByBrandId = _carDal.GetCarsDetails(c => c.BrandId == brandId);
+            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssigerForCarDetailDtos(carDetailDtoListByBrandId),
                 Messages.GetCarDetailsByBrandIdSuccessfully);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarsDetailsByColorId(int colorId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(
-                _carDal.GetCarsDetails(c => c.ColorId == colorId), Messages.GetCarDetailsByColorIdSuccessfully);
+            var carDetailDtoListByColorId = _carDal.GetCarsDetails(c => c.ColorId == colorId);
+            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssigerForCarDetailDtos(carDetailDtoListByColorId)
+                , Messages.GetCarDetailsByColorIdSuccessfully);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarsDetailsByBrandIdAndColorId(int brandId, int colorId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarsDetails(c =>
-                c.BrandId == brandId && c.ColorId == colorId));
+            var carDetailDtoListByBrandIdAndColorId = _carDal.GetCarsDetails(c =>
+                c.BrandId == brandId && c.ColorId == colorId);
+            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssigerForCarDetailDtos(carDetailDtoListByBrandIdAndColorId));
         }
 
 
-        public IDataResult<CarDetailDto> GetCarDetailsByCarId(int carId)
+        public IDataResult<CarDetailDtoWithoutImage> GetCarDetailsByCarId(int carId)
         {
-            return new SuccessDataResult<CarDetailDto>(_carDal.GetCarsDetails(c => c.CarId == carId).FirstOrDefault(), Messages.GetCarDetailDtoSuccessfully);
+            //var carDetailDto = _carDal.GetCarsDetails(c => c.CarId == carId).FirstOrDefault();
+            //var carMainImage = _carImageService.GetCarMainImageByCarId(carDetailDto.CarId);
+            //carDetailDto.MainImage = carMainImage==null ? new CarImage {ImagePath = "CarRentalDefault.jpg"} : carMainImage.Data;
+            //return new SuccessDataResult<CarDetailDto>(carDetailDto, Messages.GetCarDetailDtoSuccessfully);
+            return new SuccessDataResult<CarDetailDtoWithoutImage>(_carDal.GetCarsDetails(c=>c.CarId==carId).Single(), Messages.GetCarDetailDtoSuccessfully);
         }
 
 
@@ -146,6 +113,33 @@ namespace Business.Concrete
         {
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdatedSuccessfully);
+        }
+
+        private List<CarDetailDto> MainImageAssigerForCarDetailDtos(List<CarDetailDto> dtoListToCheck)
+        {
+            var carDetailDtoList = new List<CarDetailDto>();
+
+            foreach (var carDetailDto in dtoListToCheck)
+            {
+                var mainImage = _carImageService.GetCarMainImageByCarId(carDetailDto.CarId);
+
+                CarDetailDto carDetail = new CarDetailDto
+                {
+                    CarId = carDetailDto.CarId,
+                    BrandId = carDetailDto.BrandId,
+                    ColorId = carDetailDto.ColorId,
+                    CarName = carDetailDto.CarName,
+                    BrandName = carDetailDto.BrandName,
+                    ColorName = carDetailDto.ColorName,
+                    DailyPrice = carDetailDto.DailyPrice,
+                    Description = carDetailDto.Description,
+                    ModelYear = carDetailDto.ModelYear,
+                    MainImage = mainImage.Data
+                };
+                carDetailDtoList.Add(carDetail);
+            }
+
+            return carDetailDtoList;
         }
     }
 }
