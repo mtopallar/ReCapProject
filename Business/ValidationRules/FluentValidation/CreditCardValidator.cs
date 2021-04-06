@@ -15,8 +15,11 @@ namespace Business.ValidationRules.FluentValidation
             RuleFor(c => c.FirstNameOnTheCard).NotEmpty();
             RuleFor(c => c.LastNameOnTheCard).NotEmpty();
             RuleFor(c => c.ExpirationMounth).NotEmpty();
+            RuleFor(c => c.ExpirationMounth).InclusiveBetween(1,12);
             RuleFor(c => c.ExpirationYear).NotEmpty();
+            RuleFor(c => c.ExpirationYear).InclusiveBetween(2020, 9999);
             RuleFor(c => c.Cvv).NotEmpty();
+            RuleFor(c => c.Cvv.Length).Equal(3);
         }
     }
 }

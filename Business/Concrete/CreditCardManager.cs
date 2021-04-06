@@ -43,13 +43,13 @@ namespace Business.Concrete
                 Messages.GetAllCreditCardsSuccessfully);
         }
 
-        public IDataResult<List<CreditCard>> GetUserCardList(int customerId)
+        public IDataResult<List<CreditCard>> GetCustomerCardListByCustomerId(int customerId)
         {
             return new SuccessDataResult<List<CreditCard>>(_creditCardDal.GetAll(c => c.CustomerId == customerId),
                 Messages.GetUserCardListSuccessfully);
         }
 
-        public IDataResult<List<CreditCard>> GetCreditCardByCardTypeId(int cardTypeId)
+        public IDataResult<List<CreditCard>> GetCreditCardListByCardTypeId(int cardTypeId)
         {
             return new SuccessDataResult<List<CreditCard>>(_creditCardDal.GetAll(c => c.CardTypeId == cardTypeId),
                 Messages.GetCreditCardByCardTypeIdSuccessfully);

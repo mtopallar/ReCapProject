@@ -13,8 +13,8 @@ namespace Entities.Concrete
         public string CardNumber { get; set; }
         public string FirstNameOnTheCard { get; set; }
         public string LastNameOnTheCard { get; set; }
-        public DateTime ExpirationMounth { get; set; }
-        public DateTime ExpirationYear { get; set; }
+        public int ExpirationMounth { get; set; }
+        public int ExpirationYear { get; set; }
         public string Cvv { get; set; }
 
     }

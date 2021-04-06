@@ -11,8 +11,8 @@ namespace Business.Abstract
         IResult Add(CreditCard creditCard);
         IResult Delete(CreditCard creditCard);
         IDataResult<CreditCard> GetCreditCardByCardId(int creditCardId);
-        IDataResult<List<CreditCard>> GetAll(); //silinebilir.
-        IDataResult<List<CreditCard>> GetUserCardList(int customerId);
-        IDataResult<List<CreditCard>> GetCreditCardByCardTypeId(int cardTypeId);
+        IDataResult<List<CreditCard>> GetAll(); //gerekmezse silinebilir.(api de kullanılmadı)
+        IDataResult<List<CreditCard>> GetCustomerCardListByCustomerId(int customerId);
+        IDataResult<List<CreditCard>> GetCreditCardListByCardTypeId(int cardTypeId);
     }
 }
