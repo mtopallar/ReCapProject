@@ -9,7 +9,6 @@ using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
 using Microsoft.AspNetCore.Hosting;
-using WebApiFieUpload.Models;
 
 namespace WebAPI.Helpers
 {

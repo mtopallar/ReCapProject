@@ -13,7 +13,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class BrandsController : ControllerBase
     {
-        private IBrandService _brandService;
+        private readonly IBrandService _brandService;
 
         public BrandsController(IBrandService brandService)
         {

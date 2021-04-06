@@ -15,8 +15,8 @@ namespace Business.BusinessAspects.Autofac
     public class SecuredOperation:MethodInterception
     {
         //Bu aspect JWT için yazıldı.
-        private string[] _roles;
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly string[] _roles;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SecuredOperation(string roles)
         {

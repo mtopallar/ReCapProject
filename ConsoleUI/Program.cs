@@ -12,28 +12,28 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarManager carManager = new CarManager(new EfCarDal());
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
+            //CarManager carManager = new CarManager(new EfCarDal());
+            //ColorManager colorManager = new ColorManager(new EfColorDal());
+            //BrandManager brandManager = new BrandManager(new EfBrandDal());
 
-            UserManager userManager = new UserManager(new EfUserDal());
-            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-            RentalManager rentalManager = new RentalManager(new EfRentalDal());
-
-
-            CarImageManager carImageManager = new CarImageManager(new EfCarImageDal());
-            var carimages = carImageManager.GetListByCarId(1).Data;
-
-            EfCarDal carDal = new EfCarDal();
+            //UserManager userManager = new UserManager(new EfUserDal());
+            //CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            //RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
 
-            //Console.WriteLine(result.BrandName);
-            //Console.WriteLine(result.ColorName);
-            //Console.WriteLine(result.Description);
-            //Console.WriteLine(result.DefaultImage.ImagePath);
+            //CarImageManager carImageManager = new CarImageManager(new EfCarImageDal());
+            //var carimages = carImageManager.GetListByCarId(1).Data;
+
+            //EfCarDal carDal = new EfCarDal();
 
 
-            var result2 = carDal.GetCarDetailsByCarId(1);
+            ////Console.WriteLine(result.BrandName);
+            ////Console.WriteLine(result.ColorName);
+            ////Console.WriteLine(result.Description);
+            ////Console.WriteLine(result.DefaultImage.ImagePath);
+
+
+            //var result2 = carDal.GetCarDetailsByCarId(1);
 
             //Console.WriteLine(result2.CarName);
             //Console.WriteLine(result2.BrandName);

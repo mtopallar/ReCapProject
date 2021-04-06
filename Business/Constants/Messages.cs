@@ -75,6 +75,20 @@ namespace Business.Constants
         public static string UserRegistered="Kullanıcı başarıyla kaydedildi.";
         public static string AccessTokenCreated="Access Token başarıyla oluşturuldu.";
         public static string AuthorizationDenied = "Yetkiniz yok.";
-        
+
+        //CreditCard
+        public static string CreditCardAddedSuccessfully="Kredi kaınız başarıyla kaydedilmiştir.";
+        public static string CreditCardDeletedSuccessfully="Kredi kartınız sistemden başarı ile silinmiştir.";
+        public static string GetCreditCardByCardIdSuccessfully="Kart detayları başarıyla getirildi.";
+        public static string GetAllCreditCardsSuccessfully="Tüm kredi kartları başarıyla getirildi.";
+        public static string GetUserCardListSuccessfully="Kullanıcının tüm kartları başarıyla getirildi.";
+        public static string GetCreditCardByCardTypeIdSuccessfully="Kart tipine göre karlar başarı ile listelendi.";
+
+        //CreditCardType
+        public static string CardTypeAddedSuccessfully="Kart tipi başarı ile eklendi.";
+        public static string CardTypeUpdatedSuccessfully="Kart tipi başarıyla güncellendi.";
+        public static string CardTypeDeletedSuccessfully="Kart tipi başarıyla silindi.";
+        public static string GetAllCardTypesSuccessfully="Tüm kart tipleri başarı ile listelendi";
+        public static string GetTypeByIdSuccessfully="Kart tipi detayları başarıyla listelendi.";
     }
 }

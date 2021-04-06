@@ -11,7 +11,7 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 {
     public class MemoryCacheManager : ICacheManager
     {
-        private IMemoryCache _memoryCache; //ctor enjeksiyonu burada çalışmaz çünkü bu da bir aspect olacak ve zincirin dışında. Enjeksiyonu Core.DependencyResolvers altındaki core module dan yapalıyız.
+        private readonly IMemoryCache _memoryCache; //ctor enjeksiyonu burada çalışmaz çünkü bu da bir aspect olacak ve zincirin dışında. Enjeksiyonu Core.DependencyResolvers altındaki core module dan yapalıyız.
 
         public MemoryCacheManager()
         {

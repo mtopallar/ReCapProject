@@ -20,8 +20,8 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        private ICarDal _carDal;
-        private ICarImageService _carImageService;
+        private readonly ICarDal _carDal;
+        private readonly ICarImageService _carImageService;
 
         public CarManager(ICarDal carDal, ICarImageService carImageService)
         {

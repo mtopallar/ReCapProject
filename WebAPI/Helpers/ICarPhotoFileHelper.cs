@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using Entities.DTOs;
-using WebApiFieUpload.Models;
+using WebAPI.Models;
 
 namespace WebAPI.Helpers
 {

@@ -17,7 +17,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CarsController : ControllerBase
     {
-        private ICarService _carService;
+        private readonly ICarService _carService;
         //private static IWebHostEnvironment _webHostEnvironment;
         //private ICarImageService _carImageService;
         //private ICarPhotoFileHelper _carPhotoFileHelper;
