@@ -27,9 +27,11 @@ namespace DataAccess.Concrete.EntityFramework
                         CardNumber = creditCard.CardNumber,
                         FirstNameOnTheCard = creditCard.FirstNameOnTheCard,
                         LastNameOnTheCard = creditCard.LastNameOnTheCard,
-                        ExpirationMounth = creditCard.ExpirationMounth,
+                        ExpirationMonth = creditCard.ExpirationMonth,
                         ExpirationYear = creditCard.ExpirationYear,
-                        Cvv = creditCard.Cvv
+                        Cvv = creditCard.Cvv,
+                        SelectedCard = creditCard.SelectedCard
+                        
                     };
                 return filter == null ? result.ToList() : result.Where(filter).ToList();
             }

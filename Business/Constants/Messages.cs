@@ -60,6 +60,7 @@ namespace Business.Constants
         public static string RentalUpdatedSuccessfully = "Kira işlemi başarıyla güncellendi.";
         public static string RentDetailsListedSuccessfully="Kira detayları listesi başarıyla getirildi.";
         public static string RentalDateError="Belirtilen tarihler kira için uygun değildir.";
+        public static string CarIsRentable="Araç belirtilen tarihler arasında kiralamaya uygundur. Kiralama işlemine tamamlamak için sonraki adıma ilerleyebilirsiniz.";
         
         //CarImage
         public static string ImageAddedSuccessfully="Resim başarıyla eklendi.";
@@ -90,5 +91,10 @@ namespace Business.Constants
         public static string CardTypeDeletedSuccessfully="Kart tipi başarıyla silindi.";
         public static string GetAllCardTypesSuccessfully="Tüm kart tipleri başarı ile listelendi";
         public static string GetTypeByIdSuccessfully="Kart tipi detayları başarıyla listelendi.";
+        public static string SelectedCardGetsSuccessfully="Müşterinin 'öncelikli' olarak tanımlanmış kartı başarı ile getirildi. ";
+        
+        //Payment
+        public static string PaymentSuccessfull="Ödeme başarı ile tamamlandı.";
+        public static string PaymentError="Ödeme sırasında bir hata oluştu";
     }
 }

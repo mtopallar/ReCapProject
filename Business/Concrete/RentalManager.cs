@@ -69,7 +69,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalUpdatedSuccessfully);
         }
 
-        private IResult CheckRentability(Rental rental)
+        public IResult CheckRentability(Rental rental)
         {
             var rentals = _rentalDal.GetAll(r => r.CarId == rental.CarId);
             if (rentals.Any(r=>r.ReturnDate>=rental.RentDate && r.RentDate<=rental.ReturnDate))
@@ -77,7 +77,7 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.RentalDateError);
             }
 
-            return new SuccessResult();
+            return new SuccessResult(Messages.CarIsRentable);
         }
     }
 }

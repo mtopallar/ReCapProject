@@ -20,7 +20,7 @@ namespace WebAPI.Controllers
             _creditCardService = creditCardService;
         }
 
-        [HttpGet("getcreditcardlistbycardtypeid")]
+        [HttpGet("getcreditcardlistbycardtypeid")] //fe de henüz kullanmadım.
         public IActionResult GetCreditCardListByCardTypeId(int cardTypeId)
         {
             var result = _creditCardService.GetCreditCardListByCardTypeId(cardTypeId);
@@ -36,6 +36,18 @@ namespace WebAPI.Controllers
         public IActionResult GetCustomerCardListByCustomerId(int customerId)
         {
             var result = _creditCardService.GetCustomerCardListByCustomerId(customerId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
+        [HttpGet("getcustomerselectedcardbycustomerid")]
+        public IActionResult GetCustomerSelectedCardByCustomerId(int customerId)
+        {
+            var result = _creditCardService.GetCustomerSelectedCardByCustomerId(customerId);
             if (result.Success)
             {
                 return Ok(result);

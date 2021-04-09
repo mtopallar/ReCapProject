@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Business.Abstract;
 using Business.Constants;
@@ -8,6 +9,7 @@ using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -22,6 +24,7 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CreditCardValidator))]
         public IResult Add(CreditCard creditCard)
         {
+            creditCard.SelectedCard = SelectedCardOperations(creditCard);
             _creditCardDal.Add(creditCard);
             return new SuccessResult(Messages.CreditCardAddedSuccessfully);
         }
@@ -32,27 +35,59 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CreditCardDeletedSuccessfully);
         }
 
-        public IDataResult<CreditCard> GetCreditCardByCardId(int creditCardId)
+        public IDataResult<CreditCardDto> GetCreditCardByCardId(int creditCardId)
         {
-            return new SuccessDataResult<CreditCard>(_creditCardDal.Get(c => c.Id == creditCardId),Messages.GetCreditCardByCardIdSuccessfully);
+            return new SuccessDataResult<CreditCardDto>(_creditCardDal.GetCreditCardDetailsWithTypeName(c => c.Id==creditCardId).Single(),Messages.GetCreditCardByCardIdSuccessfully);
         }
 
-        public IDataResult<List<CreditCard>> GetAll()
+        public IDataResult<List<CreditCardDto>> GetAll()
         {
-            return new SuccessDataResult<List<CreditCard>>(_creditCardDal.GetAll(),
+            return new SuccessDataResult<List<CreditCardDto>>(_creditCardDal.GetCreditCardDetailsWithTypeName(),
                 Messages.GetAllCreditCardsSuccessfully);
         }
 
-        public IDataResult<List<CreditCard>> GetCustomerCardListByCustomerId(int customerId)
+        public IDataResult<List<CreditCardDto>> GetCustomerCardListByCustomerId(int customerId)
         {
-            return new SuccessDataResult<List<CreditCard>>(_creditCardDal.GetAll(c => c.CustomerId == customerId),
+            return new SuccessDataResult<List<CreditCardDto>>(_creditCardDal.GetCreditCardDetailsWithTypeName(c => c.CustomerId == customerId),
                 Messages.GetUserCardListSuccessfully);
         }
 
-        public IDataResult<List<CreditCard>> GetCreditCardListByCardTypeId(int cardTypeId)
+        public IDataResult<CreditCardDto> GetCustomerSelectedCardByCustomerId(int customerId)
         {
-            return new SuccessDataResult<List<CreditCard>>(_creditCardDal.GetAll(c => c.CardTypeId == cardTypeId),
+            return new SuccessDataResult<CreditCardDto>(
+                _creditCardDal
+                    .GetCreditCardDetailsWithTypeName(c => c.SelectedCard == true && c.CustomerId == customerId)
+                    .Single(), Messages.SelectedCardGetsSuccessfully);
+        }
+
+        public IDataResult<List<CreditCardDto>> GetCreditCardListByCardTypeId(int cardTypeId)
+        {
+            
+            return new SuccessDataResult<List<CreditCardDto>>(_creditCardDal.GetCreditCardDetailsWithTypeName(c => c.CardTypeId == cardTypeId),
                 Messages.GetCreditCardByCardTypeIdSuccessfully);
+        }
+
+
+        private bool SelectedCardOperations(CreditCard creditCard)
+        {
+            var selectedCardIndex = _creditCardDal.GetAll(c => c.CustomerId == creditCard.CustomerId && c.SelectedCard);
+
+            if (selectedCardIndex.Count == 0)
+            {
+                return true;
+            }
+            if (creditCard.SelectedCard && selectedCardIndex.Count > 0)
+            {
+                selectedCardIndex.Find(c=>c.SelectedCard);
+                foreach (var selectedCardToFalse in selectedCardIndex)
+                {
+                    selectedCardToFalse.SelectedCard = false;
+                    _creditCardDal.Update(selectedCardToFalse);
+                }
+
+                return true;
+            }
+            return false;
         }
     }
 }

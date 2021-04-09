@@ -89,6 +89,7 @@ namespace Business.Concrete
             carImage.Date = DateTime.Now;
             FileHelperForLocalStorage.Update(carImageForUpdate.ImagePath, file, CreateNewPath(file, out var pathForDb));
             carImage.ImagePath = pathForDb;
+            carImage.MainPhoto = MainPhotoOperations(carImage);
             _carImageDal.Update(carImage);
             return new SuccessResult(Messages.ImageUpdatedSuccessfully);
         }

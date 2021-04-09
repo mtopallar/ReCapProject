@@ -56,6 +56,18 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("checkrentability")]
+        public IActionResult CheckRentability(Rental rental)
+        {
+            var result = _rentalService.CheckRentability(rental);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+
+            return BadRequest(result);
+        }
+
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
         {

@@ -64,10 +64,10 @@ namespace DataAccess.Concrete.InMemory
             throw new NotImplementedException();
         }
 
-        public List<CarDetailsByCarIdDto> GetCarDetailsByCarId(int carId)
-        {
-            throw new NotImplementedException();
-        }
+        //public List<CarDetailsByCarIdDto> GetCarDetailsByCarId(int carId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public void Update(Car car)
         {
