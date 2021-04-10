@@ -28,7 +28,7 @@ namespace Business.Concrete
             _carDal = carDal;
             _carImageService = carImageService;
         }
-        [SecuredOperation("car.add,admin")]
+        //[SecuredOperation("car.add,admin")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]//sadece "Get" yazarsak bellekteki tüm getleri siler. (Car için color için brand için tüm servislerdeki tüm getlerin cachelerini siler.)
         [TransactionScopeAspect]
