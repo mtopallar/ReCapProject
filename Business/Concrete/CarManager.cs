@@ -61,7 +61,7 @@ namespace Business.Concrete
         public IDataResult<List<CarDetailDto>> GetCarsDetails()
         {
             var carDetailDtoList = _carDal.GetCarsDetails();
-            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssigerForCarDetailDtos(carDetailDtoList), Messages.GetCarDetailDtoSuccessfully);
+            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssignerForCarDetailDtos(carDetailDtoList), Messages.GetCarDetailDtoSuccessfully);
         }
 
         
@@ -69,14 +69,14 @@ namespace Business.Concrete
         public IDataResult<List<CarDetailDto>> GetCarsDetailsByBrandId(int brandId)
         {
             var carDetailDtoListByBrandId = _carDal.GetCarsDetails(c => c.BrandId == brandId);
-            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssigerForCarDetailDtos(carDetailDtoListByBrandId),
+            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssignerForCarDetailDtos(carDetailDtoListByBrandId),
                 Messages.GetCarDetailsByBrandIdSuccessfully);
         }
 
         public IDataResult<List<CarDetailDto>> GetCarsDetailsByColorId(int colorId)
         {
             var carDetailDtoListByColorId = _carDal.GetCarsDetails(c => c.ColorId == colorId);
-            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssigerForCarDetailDtos(carDetailDtoListByColorId)
+            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssignerForCarDetailDtos(carDetailDtoListByColorId)
                 , Messages.GetCarDetailsByColorIdSuccessfully);
         }
 
@@ -84,16 +84,13 @@ namespace Business.Concrete
         {
             var carDetailDtoListByBrandIdAndColorId = _carDal.GetCarsDetails(c =>
                 c.BrandId == brandId && c.ColorId == colorId);
-            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssigerForCarDetailDtos(carDetailDtoListByBrandIdAndColorId));
+            return new SuccessDataResult<List<CarDetailDto>>(MainImageAssignerForCarDetailDtos(carDetailDtoListByBrandIdAndColorId));
         }
 
 
         public IDataResult<CarDetailDtoWithoutImage> GetCarDetailsByCarId(int carId)
         {
-            //var carDetailDto = _carDal.GetCarsDetails(c => c.CarId == carId).FirstOrDefault();
-            //var carMainImage = _carImageService.GetCarMainImageByCarId(carDetailDto.CarId);
-            //carDetailDto.MainImage = carMainImage==null ? new CarImage {ImagePath = "CarRentalDefault.jpg"} : carMainImage.Data;
-            //return new SuccessDataResult<CarDetailDto>(carDetailDto, Messages.GetCarDetailDtoSuccessfully);
+            
             return new SuccessDataResult<CarDetailDtoWithoutImage>(_carDal.GetCarsDetails(c=>c.CarId==carId).Single(), Messages.GetCarDetailDtoSuccessfully);
         }
 
@@ -115,7 +112,7 @@ namespace Business.Concrete
             return new SuccessResult(Messages.CarUpdatedSuccessfully);
         }
 
-        private List<CarDetailDto> MainImageAssigerForCarDetailDtos(List<CarDetailDto> dtoListToCheck)
+        private List<CarDetailDto> MainImageAssignerForCarDetailDtos(List<CarDetailDto> dtoListToCheck)
         {
             var carDetailDtoList = new List<CarDetailDto>();
 

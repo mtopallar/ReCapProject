@@ -33,6 +33,7 @@ namespace DataAccess.Concrete.EntityFramework
                                  Description = car.Description,
                                  DailyPrice = car.DailyPrice,
                                  ModelYear = car.ModelYear,
+                                 MinFindeksScore = car.MinFindeksScore
                              };
 
                 return filter == null ? result.ToList() : result.Where(filter).ToList();

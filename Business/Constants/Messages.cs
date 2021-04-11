@@ -61,7 +61,7 @@ namespace Business.Constants
         public static string RentalUpdatedSuccessfully = "Kira işlemi başarıyla güncellendi.";
         public static string RentDetailsListedSuccessfully="Kira detayları listesi başarıyla getirildi.";
         public static string RentalDateError="Belirtilen tarihler kira için uygun değildir.";
-        public static string CarIsRentable="Araç belirtilen tarihler arasında kiralamaya uygundur. Kiralama işlemine tamamlamak için sonraki adıma ilerleyebilirsiniz.";
+        public static string CarIsRentable="Araç belirtilen tarihler arasında kiralamaya uygundur. Kiralama işlemini tamamlamak için sonraki adıma ilerleyebilirsiniz.";
         public static string NotEnoughFindeks="Bu aracı kiralayabilmek için yeterince puanınız bulunmuyor.";
         
         //CarImage
