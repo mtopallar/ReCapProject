@@ -68,6 +68,16 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        [HttpPost("checkiffindeksscoreenough")]
+        public IActionResult CheckFindeksScoreSufficiency(Rental rental)
+        {
+            var result = _rentalService.CheckIfFindeksScoreEnough(rental);
+            if (result.Success) return Ok(result);
+
+            return BadRequest(result);
+        }
+
+
         [HttpPost("add")]
         public IActionResult Add(Rental rental)
         {

@@ -17,17 +17,21 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         private readonly IRentalDal _rentalDal;
+        private readonly ICarService _carService;
+        private readonly IFindeksService _findexService;
 
-        public RentalManager(IRentalDal rentalDal)
+        public RentalManager(IRentalDal rentalDal, ICarService carService, IFindeksService findexService)
         {
             _rentalDal = rentalDal;
+            _carService = carService;
+            _findexService = findexService;
         }
 
         //DateTime'ın default değeri null değil.
         [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            var result = BusinessRules.Run(CheckRentability(rental));
+            var result = BusinessRules.Run(CheckRentability(rental),CheckIfFindeksScoreEnough(rental));
             if (result!= null)
             {
                 return result;
@@ -40,6 +44,23 @@ namespace Business.Concrete
         {
             _rentalDal.Delete(rental);
             return new SuccessResult(Messages.RentalDeletedSuccessfully);
+        }
+
+        public IResult CheckIfFindeksScoreEnough(Rental rental)
+        {
+            var selectedCar = _carService.GetById(rental.CarId).Data;
+            var targetfindeks = _findexService.GetFindexByCustomerId(rental.CustomerId).Data;
+            if (targetfindeks==null)
+            {
+                return new ErrorResult(Messages.UserHasNoFindex);
+            }
+
+            if (targetfindeks.Score<selectedCar.MinFindeksScore)
+            {
+                return new ErrorResult(Messages.NotEnoughFindeks);
+            }
+
+            return new SuccessResult(Messages.FindexIsEnough);
         }
 
         public IDataResult<List<Rental>> GetAll()

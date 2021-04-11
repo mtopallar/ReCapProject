@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Core.Entities.Concrete;
+using Entities.Concrete;
 
 namespace Business.Constants
 {
@@ -61,6 +62,7 @@ namespace Business.Constants
         public static string RentDetailsListedSuccessfully="Kira detayları listesi başarıyla getirildi.";
         public static string RentalDateError="Belirtilen tarihler kira için uygun değildir.";
         public static string CarIsRentable="Araç belirtilen tarihler arasında kiralamaya uygundur. Kiralama işlemine tamamlamak için sonraki adıma ilerleyebilirsiniz.";
+        public static string NotEnoughFindeks="Bu aracı kiralayabilmek için yeterince puanınız bulunmuyor.";
         
         //CarImage
         public static string ImageAddedSuccessfully="Resim başarıyla eklendi.";
@@ -96,5 +98,10 @@ namespace Business.Constants
         //Payment
         public static string PaymentSuccessfull="Ödeme başarı ile tamamlandı.";
         public static string PaymentError="Ödeme sırasında bir hata oluştu";
+
+        //Findex
+        public static string UserHasNoFindex="Kullanıcıya tanımlı Findex bilgisi bulunmamaktadır.";
+        public static string FindexAdded="Findex puane başarıyla eklendi";
+        public static string FindexIsEnough="Yeterli findeks puanına sahipsiniz.";
     }
 }
